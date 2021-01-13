@@ -1,0 +1,18 @@
+// require('./bootstrap');
+// require('../../node_modules/adminbsb-materialdesign/plugins/jquery/jquery.min');
+// require('../../node_modules/adminbsb-materialdesign/plugins/bootstrap/js/bootstrap');
+// require('../../node_modules/adminbsb-materialdesign/plugins/bootstrap-select/js/bootstrap-select.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/jquery-countto/jquery.countTo.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/jquery-sparkline/jquery.sparkline.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/jquery-slimscroll/jquery.slimscroll.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/node-waves/waves.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/raphael/raphael.min.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/morrisjs/morris.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/flot-charts/jquery.flot.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/flot-charts/jquery.flot.resize.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/flot-charts/jquery.flot.pie.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/flot-charts/jquery.flot.categories.js');
+// require('../../node_modules/adminbsb-materialdesign/plugins/flot-charts/jquery.flot.time.js');
+require('../../node_modules/adminbsb-materialdesign/js/admin');
+require('../../node_modules/adminbsb-materialdesign/js/demo');
+// require('../js/main.js');
