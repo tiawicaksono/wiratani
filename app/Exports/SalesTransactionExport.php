@@ -45,6 +45,7 @@ class SalesTransactionExport implements
             $productSales->product_name,
             $productSales->qty,
             $productSales->basic_selling_price,
+            $productSales->discon_price,
             $productSales->total_selling_price,
             $productSales->profit
         ];
@@ -59,6 +60,7 @@ class SalesTransactionExport implements
             'PRODUCT',
             'QTY',
             'PRODUCT PRICE',
+            'DISCOUNT PRODUCT',
             'OMZET',
             'PROFIT'
         ];
@@ -71,6 +73,7 @@ class SalesTransactionExport implements
             'F' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED,
             'G' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED,
             'H' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED,
+            'I' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED,
         ];
     }
 

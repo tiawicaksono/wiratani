@@ -44,8 +44,9 @@ class ReportController extends Controller
                 3 => 'product_name',
                 4 => 'qty',
                 5 => 'basic_selling_price',
-                6 => 'total_selling_price',
-                7 => 'profit',
+                6 => 'discon_price',
+                7 => 'total_selling_price',
+                8 => 'profit',
             );
             $getSelect = VProductSales::select(
                 'no_kuitansi',
@@ -54,6 +55,7 @@ class ReportController extends Controller
                 'product_name',
                 'qty',
                 'basic_selling_price',
+                'discon_price',
                 'total_selling_price',
                 'profit'
             );
@@ -78,17 +80,19 @@ class ReportController extends Controller
                 'profit'
             )->whereBetween('sales_date', [$from_date, $to_date]);
             $sum_product_price = $sum->sum('basic_selling_price');
+            $sum_discount_price = $sum->sum('discon_price');
             $sum_selling_price = $sum->sum('total_selling_price');
             $sum_profit = $sum->sum('profit');
             $data = array();
             if (!empty($posts)) {
                 foreach ($posts as $post) {
                     $nestedData['no_kuitansi'] = $post->no_kuitansi;
-                    $nestedData['sales_date'] = Helpers::customDate($post->sales_date, 'short');
+                    $nestedData['sales_date'] = date('d/m/y', strtotime($post->sales_date));
                     $nestedData['distributor_name'] = $post->distributor_name;
                     $nestedData['product_name'] = $post->product_name;
                     $nestedData['qty'] = $post->qty;
                     $nestedData['basic_selling_price'] = "Rp " . number_format($post->basic_selling_price, 0, ',', '.');
+                    $nestedData['discon_price'] = "Rp " . number_format($post->discon_price, 0, ',', '.');
                     $nestedData['total_selling_price'] = "Rp " . number_format($post->total_selling_price, 0, ',', '.');
                     $nestedData['profit'] = "Rp " . number_format($post->profit, 0, ',', '.');
                     $data[] = $nestedData;
@@ -96,13 +100,14 @@ class ReportController extends Controller
             }
 
             $json_data = array(
-                "draw"            => intval($request->input('draw')),
-                "recordsTotal"    => intval($totalData),
-                "recordsFiltered" => intval($totalFiltered),
-                "data"            => $data,
-                "total_product_price"           => number_format($sum_product_price, 0, ',', '.'),
-                "total_selling_price"           => number_format($sum_selling_price, 0, ',', '.'),
-                "total_profit"           => number_format($sum_profit, 0, ',', '.')
+                "draw"                 => intval($request->input('draw')),
+                "recordsTotal"         => intval($totalData),
+                "recordsFiltered"      => intval($totalFiltered),
+                "data"                 => $data,
+                "total_product_price"  => number_format($sum_product_price, 0, ',', '.'),
+                "total_discount"       => number_format($sum_discount_price, 0, ',', '.'),
+                "total_selling_price"  => number_format($sum_selling_price, 0, ',', '.'),
+                "total_profit"         => number_format($sum_profit, 0, ',', '.')
             );
 
             echo json_encode($json_data);

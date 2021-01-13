@@ -43,6 +43,7 @@ function fill_datatable() {
         },
         drawCallback: function (settings) {
             $('#total_product_price').html(settings.json.total_product_price);
+            $('#total_discount').html(settings.json.total_discount);
             $('#total_selling_price').html(settings.json.total_selling_price);
             $('#total_profit').html(settings.json.total_profit);
         },
@@ -53,6 +54,7 @@ function fill_datatable() {
             { data: "product_name" },
             { data: "qty" },
             { data: "basic_selling_price" },
+            { data: "discon_price" },
             { data: "total_selling_price" },
             { data: "profit" }
         ]

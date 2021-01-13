@@ -44,19 +44,21 @@
                         <th rowspan="2">Delivery Date</th>
                         <th rowspan="2">Distributor Name</th>
                         <th rowspan="2">Product Name</th>
-                        <th colspan="2" style="text-align: center">Price</th>
+                        <th colspan="3" style="text-align: center">Price</th>
                         <th rowspan="2" style="width: 68px;">Omzet</th>
                         <th rowspan="2" style="width: 68px;">Profit</th>
                     </tr>
                     <tr role="row">
                         <th style="width: 38px;">QTY</th>
                         <th style="width: 68px;">Product Price</th>
+                        <th style="width: 68px;">Disc Product</th>
                     </tr>
                 </thead>
                 <tfoot>
                     <tr>
                         <th colspan="5">TOTAL</th>
                         <th id="total_product_price"></th>
+                        <th id="total_discount"></th>
                         <th id="total_selling_price"></th>
                         <th id="total_profit"></th>
                     </tr>
