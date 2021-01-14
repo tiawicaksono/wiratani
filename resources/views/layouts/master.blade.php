@@ -14,7 +14,7 @@
     @yield('style')
 </head>
 
-<body class="theme-red">
+<body class="theme-red ls-closed">
     <!-- Page Loader -->
     <div class="page-loader-wrapper">
         <div class="loader">
@@ -95,7 +95,7 @@
 <script src="/js/master/jquery.multi-select.js"></script>
 <script src="/js/easyui/jquery.easyui.min.js"></script>
 <script src="/js/easyui/datagrid-scrollview.js"></script>
-<script src="/js/master/app.js"></script>
+<script src="/js/app.js"></script>
 <script src="/js/main.js"></script>
 @yield('script')
 
