@@ -27,9 +27,11 @@ Route::group(['prefix' => 'cashier', 'as' => 'cashier.'], function () {
     Route::post('list', 'RetribusiController@listProduct');
     Route::post('store', 'RetribusiController@store');
 });
-
+/**
+ * MASTER
+ */
 Route::group(['prefix' => 'productPrices', 'as' => 'productPrices.'], function () {
-    Route::get('/', 'ProductPricesController@index')->name('create');
+    Route::get('/', 'ProductPricesController@index')->name('index');
     Route::post('update', 'ProductPricesController@update')->name('update');
     Route::post('store', 'ProductPricesController@store')->name('store');
     Route::post('destroy', 'ProductPricesController@destroy')->name('delete');
@@ -53,9 +55,18 @@ Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
     Route::post('show', 'ProductController@show');
 });
 
-// Route::get('distributorProduct', function () {
-//     return "Distributor";
-// })->name('distributorProduct');
+Route::group(['prefix' => 'stockOpname', 'as' => 'stockOpname.'], function () {
+    Route::get('/', 'StockOpnameController@index')->name('index');
+    Route::post('update', 'StockOpnameController@update')->name('update');
+    Route::post('store', 'StockOpnameController@store')->name('store');
+    Route::post('destroy', 'StockOpnameController@destroy')->name('delete');
+    Route::post('show', 'StockOpnameController@show');
+    Route::post('detail', 'StockOpnameController@detailProduct')->name('detail');
+    Route::post('selectpicker', 'StockOpnameController@selectpicker');
+});
+/**
+ * REPORT
+ */
 Route::group(['prefix' => 'report', 'as' => 'report.'], function () {
     Route::get('salestransaction', 'ReportController@indexSalesTransaction')->name('salestransaction');
     Route::post('listtransaction', 'ReportController@listSalesTransaction');
