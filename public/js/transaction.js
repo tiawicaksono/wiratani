@@ -154,6 +154,10 @@ function calculateTagihan() {
 function calculateUnitPrice(obj) {
     var spin = $(obj).data("spin");
     let sum = 0
+    let stock = parseInt($(obj)
+        .closest("tr")
+        .find(".stock")
+        .html());
     let unitPrice = $(obj)
         .closest("tr")
         .find(".unit_price_ori")
@@ -173,6 +177,22 @@ function calculateUnitPrice(obj) {
     }
     if (!qty) {
         qty = parseInt(1);
+    }
+    if (qty > stock) {
+        $(obj)
+            .closest("tr")
+            .find(".quantity")
+            .val(stock);
+        $(obj)
+            .closest("tr")
+            .find(".quantity")
+            .prop("disabled", true);
+        qty = stock
+    } else {
+        $(obj)
+            .closest("tr")
+            .find(".quantity")
+            .prop("disabled", false);
     }
     sum = (qty * unitPrice) - (qty * discon);
     $(obj)
