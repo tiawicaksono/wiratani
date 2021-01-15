@@ -47,29 +47,7 @@ class ProductPricesController extends Controller
                     'delivery_date' => $delivery_date,
                     'distributor_products_list_id' => $distributor_product_list_id,
                 );
-                $id = DistributorProduct::create($arDataDistributorProduct)->id;
-
-                $getData = VDistributorProduct::select(
-                    'distributor_name',
-                    'product_name',
-                    'stock_product',
-                    'profit'
-                )
-                    ->where('id', $id)
-                    ->first();
-                $output['id'] = $id;
-                $output['product_name'] = $getData->product_name;
-                $output['distributor_name'] = $getData->distributor_name;
-                $output['purchase_price'] = number_format($purchase_price, 0, ',', '.');
-                $output['selling_price'] = number_format($selling_price, 0, ',', '.');
-                // $output['purchase_price_ori'] = $getData->purchase_price;
-                // $output['selling_price_ori'] = $getData->selling_price;
-                $output['total_product'] = $total_product;
-                $output['stock_product'] = $getData->stock_product;
-                $output['profit'] = $getData->profit;
-                $output['delivery_date'] = $delivery_date;
-                $tglDelivery = DateTime::createFromFormat('d/m/Y', $delivery_date);
-                $output['format_delivery_date'] = Helpers::customDate($tglDelivery->format('m/d/Y'), 'short');
+                DistributorProduct::create($arDataDistributorProduct);
                 $output['status'] = 'ok';
             } catch (\Throwable $th) {
                 $output['status'] = 'error';
@@ -354,7 +332,7 @@ class ProductPricesController extends Controller
 
                 $nestedData['delivery_date'] = "<span class='editSpan delivery_date'>$delivery_date_span</span>
                 <input class='editInput delivery_date form-control input-sm varInput mask_date date_max_today'
-                type='text' name='delivery_date' value='$delivery_date_form' style='display: none; width:77px'>";
+                type='text' name='delivery_date' value='$delivery_date_form' style='display: none; width:85px'>";
 
                 $nestedData['action'] = "<div class='btn-group btn-group-sm edit-delete'>
                     <button type='button' class='btn btn-default waves-effect editBtn' style='float: none;'

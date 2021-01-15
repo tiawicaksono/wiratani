@@ -103,37 +103,27 @@ function saveButton(obj, ID, choice = 'update') {
         data: inputData + '&id=' + ID,
         success: function (response) {
             if (response.status == 'ok') {
-                trObj.find(".editSpan.product_name").text(response.product_name);
-                trObj.find(".editSpan.total_product").text(response.total_product);
-                trObj.find(".stock_product").text(response.stock_product);
-                trObj.find(".profit").text("Rp " + addPeriod(response.profit));
-                trObj.find(".editSpan.purchase_price").text("Rp " + response.purchase_price);
-                trObj.find(".editSpan.selling_price").text("Rp " + response.selling_price);
-                trObj.find(".editSpan.delivery_date").text(response.format_delivery_date);
-
-                // trObj.find(".editInput.product_name").val(response.product_name);
-                // trObj.find(".editInput.total_product").val(response.total_product);
-                // trObj.find(".editInput.purchase_price").val(response.purchase_price);
-                // trObj.find(".editInput.selling_price").val(response.selling_price);
-                // trObj.find(".editInput.purchase_price_ori").val(response.purchase_price_ori);
-                // trObj.find(".editInput.selling_price_ori").val(response.selling_price_ori);
-                trObj.find(".editInput.delivery_date").val(response.delivery_date);
-
                 if (choice == 'update') {
+                    trObj.find(".editSpan.product_name").text(response.product_name);
+                    trObj.find(".editSpan.total_product").text(response.total_product);
+                    trObj.find(".stock_product").text(response.stock_product);
+                    trObj.find(".profit").text("Rp " + addPeriod(response.profit));
+                    trObj.find(".editSpan.purchase_price").text("Rp " + response.purchase_price);
+                    trObj.find(".editSpan.selling_price").text("Rp " + response.selling_price);
+                    trObj.find(".editSpan.delivery_date").text(response.format_delivery_date);
+                    trObj.find(".editInput.delivery_date").val(response.delivery_date);
                     trObj.find(".editInput").hide();
                     trObj.find(".editSpan").show();
                     trObj.find(".edit-delete").show();
                     trObj.find(".saveBtn").hide();
                     trObj.find(".cancelBtn").hide();
                 } else {
-                    trObj.find(".editInput.product_name").val(response.product_name);
                     trObj.find(".editInput.total_product").val('');
                     trObj.find(".stock_product").text('0');
                     trObj.find(".editInput.purchase_price").val('');
                     trObj.find(".editInput.selling_price").val('');
                     trObj.find(".editInput.purchase_price_ori").val('');
                     trObj.find(".editInput.selling_price_ori").val('');
-                    trObj.find(".editInput.delivery_date").val(response.delivery_date);
                     $('#table-distribtor-product').dataTable().api().ajax.reload();
                 }
 
