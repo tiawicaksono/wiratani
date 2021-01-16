@@ -32,14 +32,14 @@ class StockOpnameController extends Controller
     {
         if ($request->ajax()) {
             $distributor_product = $request->product_id;
-            $total_product = $request->total_product;
+            $total_product = $request->qty;
             $note = $request->note;
             $input_date = $request->input_date;
 
             try {
                 $arDataDistributorProduct = array(
                     'distributor_product_id' => $distributor_product,
-                    'total_product' => $total_product,
+                    'qty' => $total_product,
                     'note' => $note,
                     'input_date' => $input_date,
                 );
@@ -65,14 +65,14 @@ class StockOpnameController extends Controller
         if ($request->ajax()) {
             $id = $request->id;
             $distributor_product = $request->product_id;
-            $total_product = $request->total_product;
+            $total_product = $request->qty;
             $note = $request->note;
             $input_date = $request->input_date;
 
             try {
                 $arDataDistributorProduct = array(
                     'distributor_product_id' => $distributor_product,
-                    'total_product' => $total_product,
+                    'qty' => $total_product,
                     'note' => $note,
                     'input_date' => $input_date,
                 );
@@ -84,7 +84,7 @@ class StockOpnameController extends Controller
                     ->where('id', $id)
                     ->first();
                 $output['product_name'] = $getData->product_name;
-                $output['qty'] = $qty;
+                $output['qty'] = $total_product;
                 $output['note'] = $note;
                 $tglDelivery = DateTime::createFromFormat('d/m/Y', $input_date);
                 $output['input_date'] = $input_date;
@@ -108,16 +108,16 @@ class StockOpnameController extends Controller
     public function destroy(Request $request)
     {
         if ($request->ajax()) {
-            // try {
-            //     DistributorProduct::destroy($request->id);
-            //     $output['status'] = 'ok';
-            //     $output['msg'] = 'ok';
-            // } catch (\Throwable $th) {
-            //     //throw $th;
-            //     $output['status'] = 'error';
-            //     $output['msg'] = "Can't be deleted, because the transaction has already been used";
-            // }
-            // return response()->json($output);
+            try {
+                StockOpname::destroy($request->id);
+                $output['status'] = 'ok';
+                $output['msg'] = 'ok';
+            } catch (\Throwable $th) {
+                //throw $th;
+                $output['status'] = 'error';
+                $output['msg'] = "Can't be deleted, because the transaction has already been used";
+            }
+            return response()->json($output);
         }
     }
 

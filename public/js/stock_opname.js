@@ -131,7 +131,7 @@ function saveButton(obj, ID, choice = 'update') {
 function actionDelete(obj, ID) {
     var trObj = $(obj).closest("tr");
     $.ajax({
-        url: 'productPrices/destroy',
+        url: 'stockOpname/destroy',
         type: 'POST',
         dataType: "json",
         data: { id: ID },
