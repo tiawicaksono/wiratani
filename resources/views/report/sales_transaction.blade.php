@@ -56,8 +56,8 @@
                 </thead>
                 <tfoot>
                     <tr>
-                        <th colspan="5">TOTAL</th>
-                        <th id="total_product_price"></th>
+                        <th colspan="6">TOTAL</th>
+                        {{-- <th id="total_product_price"></th> --}}
                         <th id="total_discount"></th>
                         <th id="total_selling_price"></th>
                         <th id="total_profit"></th>

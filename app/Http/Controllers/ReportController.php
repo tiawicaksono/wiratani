@@ -104,7 +104,7 @@ class ReportController extends Controller
                 "recordsTotal"         => intval($totalData),
                 "recordsFiltered"      => intval($totalFiltered),
                 "data"                 => $data,
-                "total_product_price"  => number_format($sum_product_price, 0, ',', '.'),
+                // "total_product_price"  => number_format($sum_product_price, 0, ',', '.'),
                 "total_discount"       => number_format($sum_discount_price, 0, ',', '.'),
                 "total_selling_price"  => number_format($sum_selling_price, 0, ',', '.'),
                 "total_profit"         => number_format($sum_profit, 0, ',', '.')

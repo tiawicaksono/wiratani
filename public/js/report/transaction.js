@@ -42,7 +42,7 @@ function fill_datatable() {
             }
         },
         drawCallback: function (settings) {
-            $('#total_product_price').html(settings.json.total_product_price);
+            // $('#total_product_price').html(settings.json.total_product_price);
             $('#total_discount').html(settings.json.total_discount);
             $('#total_selling_price').html(settings.json.total_selling_price);
             $('#total_profit').html(settings.json.total_profit);
