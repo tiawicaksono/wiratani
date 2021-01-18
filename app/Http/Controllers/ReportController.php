@@ -74,11 +74,7 @@ class ReportController extends Controller
                 ->get();
 
             $totalFiltered = VProductSales::whereBetween('sales_date', [$from_date, $to_date])->count();
-            $sum = VProductSales::select(
-                'basic_selling_price',
-                'total_selling_price',
-                'profit'
-            )->whereBetween('sales_date', [$from_date, $to_date]);
+            $sum = VProductSales::whereBetween('sales_date', [$from_date, $to_date]);
             $sum_product_price = $sum->sum('basic_selling_price');
             $sum_discount_price = $sum->sum('discon_price');
             $sum_selling_price = $sum->sum('total_selling_price');
