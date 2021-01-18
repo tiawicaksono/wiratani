@@ -73,8 +73,7 @@
                     </tr>
                 </tbody>
             </table>
-            <table id="table-distribtor-product" class="table table-bordered table-striped table-hover dataTable"
-                role="grid">
+            <table id="table-stock-opname" class="table table-bordered table-striped table-hover dataTable" role="grid">
                 <thead>
                     <tr role="row">
                         <th style="width:250px !important">Product Name</th>

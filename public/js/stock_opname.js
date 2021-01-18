@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#table-distribtor-product').dataTable({
+    $('#table-stock-opname').dataTable({
         aoColumnDefs: [
             { bSortable: false, aTargets: [2, 3, 4, 5] },
             { bSearchable: false, aTargets: [2, 3, 4, 5] },
@@ -112,7 +112,7 @@ function saveButton(obj, ID, choice = 'update') {
                     trObj.find(".editInput.qty").val('');
                     trObj.find(".stock_product").text('0');
                     trObj.find(".editInput.note").val('');
-                    $('#table-distribtor-product').dataTable().api().ajax.reload();
+                    $('#table-stock-opname').dataTable().api().ajax.reload();
                 }
 
             } else {
