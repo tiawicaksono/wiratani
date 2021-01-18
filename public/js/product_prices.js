@@ -82,7 +82,6 @@ function cancelButton(obj, choice = 'update') {
         trObj.find(".editInput").hide();
     } else {
         trObj.find(".editInput.total_product").val('');
-        trObj.find(".stock_product").text('0');
         trObj.find(".editInput.purchase_price").val('');
         trObj.find(".editInput.selling_price").val('');
         trObj.find(".editInput.purchase_price_ori").val('');
@@ -119,7 +118,6 @@ function saveButton(obj, ID, choice = 'update') {
                     trObj.find(".cancelBtn").hide();
                 } else {
                     trObj.find(".editInput.total_product").val('');
-                    trObj.find(".stock_product").text('0');
                     trObj.find(".editInput.purchase_price").val('');
                     trObj.find(".editInput.selling_price").val('');
                     trObj.find(".editInput.purchase_price_ori").val('');
