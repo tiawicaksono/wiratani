@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
 use App\Model\Distributor;
+use App\Model\Supply;
 use App\model\view\VDistributorProduct;
 use App\Model\view\VDistributorProductList;
-use App\model\view\VSupply;
+use App\model\view\VSupplies;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -20,8 +21,66 @@ class SupplyController extends Controller
     public function index()
     {
         $listProduct = VDistributorProductList::get();
-        $distributor = Distributor::orderBy('distributor_name', 'asc')->first()->distributor_name;
+        $distributor = Distributor::orderBy('distributor_name', 'asc')->get();
         return view('supply.index', compact('listProduct', 'distributor'));
+    }
+
+    public function searchProduct(Request $request)
+    {
+        if ($request->ajax()) {
+            $products = VDistributorProductList::where('distributor_id', $request->distributor)
+                ->where(function ($query) {
+                    $query->where('product_name', 'ILIKE', '%' . request()->search . '%')
+                        ->orWhere('product_code', 'ILIKE', request()->search);
+                });
+            $count_product = $products->count();
+            try {
+                $getProducts = $products->first();
+                $id = $getProducts->id;
+                $product_name = $getProducts->product_name;
+                $output['count_data'] = $count_product;
+                $output['id'] = $id;
+                $output['product_name'] = $product_name;
+                return response()->json($output);
+            } catch (Exception $e) {
+                dd($e->getMessage());
+            }
+        }
+    }
+
+    public function listProduct(Request $request)
+    {
+        if ($request->ajax()) {
+            $page = isset($_POST['page']) ? intval($_POST['page']) : 1;
+            $rows = isset($_POST['rows']) ? intval($_POST['rows']) : 10;
+            $sort = isset($_POST['sort']) ? strval($_POST['sort']) : 'product_name';
+            $order = isset($_POST['order']) ? strval($_POST['order']) : 'asc';
+            $offset = ($page - 1) * $rows;
+
+            $products = VDistributorProductList::where('distributor_id', $request->distributor)
+                ->where(function ($query) {
+                    $query->where('product_name', 'ILIKE', '%' . request()->search . '%')
+                        ->orWhere('product_code', 'ILIKE', request()->search);
+                });
+            $count = $products->count();
+            $productss = $products->orderBy($sort, $order)
+                ->limit($rows)
+                ->skip($offset)
+                ->get();
+            $dataJson = array();
+            foreach ($productss as $value) {
+                $dataJson[] = array(
+                    "id" => $value->product_code,
+                    "product_code" => $value->product_code,
+                    "product_name" => $value->product_name
+                );
+            }
+            $arData =  array(
+                'total' => $count,
+                'rows' => $dataJson
+            );
+            return response()->json($arData);
+        }
     }
 
     /**
@@ -42,7 +101,13 @@ class SupplyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $product = $request->batch;
+            $input_date = $request->input_date;
+            $distributor_id = $request->distributor_id;
+            //INSERT
+            Supply::insert($product, $input_date, $distributor_id);
+        }
     }
 
     /**
@@ -74,9 +139,20 @@ class SupplyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            try {
+                Supply::destroy($request->id);
+                $output['status'] = 'ok';
+                $output['msg'] = 'ok';
+            } catch (\Throwable $th) {
+                //throw $th;
+                $output['status'] = 'error';
+                $output['msg'] = "Can't be deleted, because the transaction has already been used";
+            }
+            return response()->json($output);
+        }
     }
 
     public function show(Request $request)
@@ -88,15 +164,15 @@ class SupplyController extends Controller
                 0 => 'product_name',
                 1 => 'distributor_name',
                 2 => 'note',
-                3 => 'price',
-                4 => 'qty',
+                3 => 'qty',
+                4 => 'price',
                 5 => 'total',
                 6 => 'delivery_date',
                 7 => 'source',
                 8 => 'action'
             );
 
-            $getSelect = VSupply::select(
+            $getSelect = VSupplies::select(
                 'id',
                 'product_name',
                 'distributor_name',
@@ -120,10 +196,10 @@ class SupplyController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = VSupply::whereBetween('delivery_date', [$from_date, $to_date])->count();
-            $sum_total = VSupply::whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
-            $sum_helios = VSupply::where('source', 'H')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
-            $sum_wiratani = VSupply::where('source', 'W')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+            $totalFiltered = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])->count();
+            $sum_total = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+            $sum_helios = VSupplies::where('source', 'H')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+            $sum_wiratani = VSupplies::where('source', 'W')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
 
             $data = array();
             if (!empty($posts)) {
@@ -161,6 +237,10 @@ class SupplyController extends Controller
                     <input class='editInput note form-control input-sm varInput' type='text' 
                     name='note' value='$post->note' style='display: none; width:150px !important'>";
 
+                    $nestedData['qty'] = "<span class='editSpan qty'>$post->qty</span>
+                    <input id='qty_$id' class='editInput qty form-control input-sm' type='text'
+                    value='$post->qty' style='display: none; width:50px'>";
+
                     $nestedData['price'] = "<span
                     class='editSpan price'>$price_span</span>
                     <input id='price$id' class='editInput price form-control input-sm' type='text'
@@ -168,10 +248,6 @@ class SupplyController extends Controller
                     <input id='price" . $id . "_ori' type='hidden'
                     class='form-control text-center varInput' name='price'
                     value='$post->price'>";
-
-                    $nestedData['qty'] = "<span class='editSpan qty'>$post->qty</span>
-                    <input id='qty_$id' class='editInput qty form-control input-sm' type='text'
-                    value='$post->qty' style='display: none; width:50px'>";
 
                     $nestedData['total'] = "<span class='total'>" . Helpers::MoneyFormat($post->total) . "</span>";
 

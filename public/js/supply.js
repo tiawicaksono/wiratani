@@ -8,7 +8,26 @@ $(document).ready(function () {
     $("#btnFilter").click(function () {
         fill_datatable()
     })
+    closeDialogTable()
 })
+
+function closeDialogTable() {
+    $("#dialogListGridProduct").dialog("close");
+}
+
+$(document).on("keypress", ".form_product_code", function (e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+        prosesSearch($(this).val(), this)
+    }
+});
+
+$(document).on("keypress", ".price, .discon", function (e) {
+    var code = e.keyCode || e.which;
+    if (code == 13) {
+        addRow();
+    }
+});
 
 function fill_datatable() {
     var fromDate = $("#dari_tgl").val();
@@ -20,7 +39,7 @@ function fill_datatable() {
             { visible: false, aTargets: [6] },
             { bSortable: false, aTargets: [2, 3, 4, 5, 6, 7, 8] },
             {
-                targets: [4, 7, 8],
+                targets: [3, 7, 8],
                 className: "text-center",
             },
         ],
@@ -48,7 +67,7 @@ function fill_datatable() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "supply/show",
+            url: 'supply/show',
             dataType: "JSON",
             type: "POST",
             data: {
@@ -60,26 +79,208 @@ function fill_datatable() {
             { data: 'product_name' },
             { data: 'distributor_name' },
             { data: 'note' },
-            { data: 'price' },
             { data: 'qty' },
+            { data: 'price' },
             { data: 'total' },
             { data: 'delivery_date' },
             { data: 'source' },
             { data: 'action' }
         ]
     });
-
-    // $('#table-supply tbody').on('click', 'tr.group', function () {
-    //     var currentOrder = table.order()[0];
-    //     if (currentOrder[0] === groupColumn && currentOrder[1] === 'asc') {
-    //         table.order([groupColumn, 'desc']).draw();
-    //     }
-    //     else {
-    //         table.order([groupColumn, 'asc']).draw();
-    //     }
-    // });
 }
 
+function prosesSearch(text_category, this_textbox) {
+    let distributor = $('#distributor_id').val()
+    $.ajax({
+        url: "supply/search",
+        type: "POST",
+        data: {
+            search: text_category,
+            distributor: distributor
+        },
+        dataType: "JSON",
+        beforeSend: function () {
+            showlargeloader();
+        },
+        success: function (data) {
+            hidelargeloader();
+            if (data.count_data > 1) {
+                loadDialogTable(text_category, distributor, this_textbox);
+            } else if (data.count_data == 1) {
+                closeDialogTable()
+                $(this_textbox)
+                    .closest("tr")
+                    .find(".form_product_code")
+                    .val(data.product_name);
+                $(this_textbox)
+                    .closest("tr")
+                    .find(".form_product_id")
+                    .val(data.id);
+                $(this_textbox)
+                    .closest("tr")
+                    .find(".qty")
+                    .focus()
+            } else {
+                $(this_textbox)
+                    .closest("tr")
+                    .find(".form_product_id")
+                    .val(0);
+                swal({
+                    closeOnEsc: false,
+                    title: "Data not found",
+                    type: "error"
+                    // text: "Here's a custom image."
+                });
+            }
+        },
+        error: function () {
+            $(this_textbox)
+                .closest("tr")
+                .find(".form_product_id")
+                .val(0);
+            swal({
+                closeOnEsc: false,
+                title: "Data not found",
+                type: "error"
+                // text: "Here's a custom image."
+            });
+            hidelargeloader();
+            return false;
+        }
+    });
+}
+
+function loadDialogTable(text_category, distributor, this_textbox) {
+    $("#dialogListGridProduct").dialog("open");
+    $("#dialogListGridProduct").dialog("center");
+    $("#listGridProduct").datagrid({
+        url: "supply/list",
+        singleSelect: true,
+        selectOnCheck: false,
+        checkOnSelect: true,
+        pagination: true,
+        collapsible: true,
+        minimizable: true,
+        rownumbers: true,
+        striped: true,
+        loadMsg: "Loading...",
+        method: "POST",
+        nowrap: false,
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [5, 10, 20],
+        columns: [
+            [{
+                field: "id",
+                title: "",
+                width: 50,
+                halign: "center",
+                align: "center",
+                formatter: buttonSelectAcuan
+            },
+            {
+                field: "product_code",
+                title: "Product Code",
+                width: 130,
+                sortable: true
+            },
+            {
+                field: "product_name",
+                width: 200,
+                title: "Product Name",
+                sortable: true
+            }]
+        ],
+        onBeforeLoad: function (params) {
+            params.search = text_category;
+            params.distributor = distributor;
+        },
+        onLoadError: function () {
+            return false;
+        },
+        onLoadSuccess: function () { }
+    });
+
+    function buttonSelectAcuan(value) {
+        var button = '<button type="button" class="btn btn-info" onclick="selectProduct(\'' + value + '\',\'' + this_textbox.id + '\')"><span class="glyphicon glyphicon-zoom-in "></span></button>';
+        return button;
+    }
+}
+
+function selectProduct(params, field_id) {
+    var explode = field_id.split('_')
+    var idx = explode[3]
+    var distributor = $('#distributor_id').val()
+    $.ajax({
+        url: "supply/search",
+        type: "POST",
+        data: {
+            search: params,
+            distributor: distributor
+        },
+        dataType: "JSON",
+        beforeSend: function () {
+            showlargeloader();
+        },
+        success: function (data) {
+            hidelargeloader()
+            closeDialogTable()
+            $('#form_product_code_' + idx).val(data.product_name)
+            $('#form_product_id_' + idx).val(data.id)
+            $('#qty_' + idx).focus()
+        },
+        error: function () {
+            hidelargeloader();
+            return false;
+        }
+    });
+}
+
+function save() {
+    var arr = [];
+    $(".form_product_id").each(function () {
+        var id = $(this).closest("tr").find('.form_product_id').val()
+        var product_code = $(this).closest("tr").find('.form_product_code').val()
+        var qty = $(this).closest("tr").find('.qty').val()
+        var price = $(this).closest("tr").find('.price_ori').val()
+        var source_price = $(this).closest("tr").find('.filled-in:checkbox:checked').val()
+        arr.push({
+            id: id,
+            product_code: product_code,
+            qty: qty,
+            price: price,
+            source_price: source_price
+        });
+    });
+    let input_date = $("#input_date").val()
+    let distributor_id = $("#distributor_id :selected").val()
+    $.ajax({
+        url: "supply/store",
+        type: "POST",
+        data: {
+            _token: $('input[name="_token"]').val(),
+            batch: arr,
+            input_date: input_date,
+            distributor_id: distributor_id,
+        },
+        async: false,
+        beforeSend: function () {
+            showlargeloader()
+        },
+        success: function (data) {
+            hidelargeloader()
+            $('#product_table tbody tr').remove()
+            addRow()
+            $('#table-supply').dataTable().api().ajax.reload()
+        },
+        error: function () {
+            hidelargeloader()
+            return false
+        }
+    });
+}
+
+// =======================================================
 // BUTTON
 function deleteButton(obj) {
     var trObj = $(obj).closest("tr");
@@ -139,7 +340,7 @@ function saveButton(obj, ID, choice = 'update') {
     var trObj = $(obj).closest("tr");
     var inputData = $(obj).closest("tr").find(".varInput").serialize();
     $.ajax({
-        url: 'stockOpname/' + choice,
+        url: choice,
         type: 'POST',
         dataType: "json",
         data: inputData + '&id=' + ID,
@@ -175,12 +376,10 @@ function saveButton(obj, ID, choice = 'update') {
     });
 }
 
-// =======================================================
-
 function actionDelete(obj, ID) {
     var trObj = $(obj).closest("tr");
     $.ajax({
-        url: 'stockOpname/destroy',
+        url: 'supply/destroy',
         type: 'POST',
         dataType: "json",
         data: { id: ID },
@@ -206,69 +405,35 @@ function actionDelete(obj, ID) {
 }
 
 // =======================================================
-function selectInput(obj) {
-    var subtext = $(obj).find('option:selected').data("subtext");
-    var trObj = $(obj).closest("tr");
-    trObj.find(".distributor_name").text(subtext);
-    ID = $(obj).find('option:selected').val();
-    $.ajax({
-        url: 'stockOpname/detail',
-        type: 'POST',
-        dataType: "json",
-        data: { id: ID },
-        success: function (response) {
-            trObj.find(".stock_product").html(response.stock);
-        }
-    });
+let rowIdx = 1;
+function addRow() {
+    rowIdx++;
+    $("#tbody").append(
+        '<tr id="' +
+        rowIdx +
+        '">' +
+        '<td class="row-index text-center">' +
+        '<div class="input-group"><span class="input-group-addon"><input type="checkbox" class="filled-in" id="ig_checkbox' + rowIdx + '"><label for="ig_checkbox' + rowIdx + '"></label></span>' +
+        '<div class="form-line"><input type="text" class="form-control form_product_code" id="form_product_code_' + rowIdx + '"></div></div>' +
+        '<input type="hidden" class="form-control form_product_id" id="form_product_id_' + rowIdx + '"></td>' +
+        '<td class="row-index text-center"><div class="input-group"><div class="form-line"><input type="text" class="form-control qty text-center" id="qty_' + rowIdx + '"></div></div></td>' +
+        '<td class="row-index text-right">' +
+        '<div class="input-group"><div class="form-line"><input type="text" class="form-control price text-center" id="price_' + rowIdx + '" size="5" onkeyup="priceRow(this)"></div></div>' +
+        '<input type="hidden" class="form-control price_ori text-center" id="price_' + rowIdx + '_ori" value="0">' +
+        '</td>' +
+        '<td class="text-center">' +
+        '<button class="btn btn-danger remove" type="button">' +
+        '<i class="material-icons">delete</i></button></td></tr>'
+    );
+    $("#form_product_code_" + rowIdx).focus();
+    var script = document.createElement("script");
+    script.src = "/js/master/jquery.spinner.min.js";
+    script.type = "text/javascript";
+    document.getElementsByTagName("head")[0].appendChild(script);
 }
 
-function price(obj) {
-    if (!$(obj).val()) {
-        var n = ""
-    } else {
-        var n = parseInt(
-            $(obj)
-                .val()
-                .replace(/\D/g, ""),
-            10
-        )
-    }
-    $(obj).val(n.toLocaleString("id"))
-}
-
-function priceRow(obj) {
-    let id = obj.id
-    price(obj)
-    if (!$(obj).val()) {
-        $("#" + id + "_ori").val(0)
-    } else {
-        $("#" + id + "_ori").val(
-            $(obj)
-                .val()
-                .replace(/\.(\d\d)$/, ".$1")
-                .replace(".", "")
-        )
-    }
-}
-
-function reloadProduct() {
-    $.ajax({
-        url: "stockOpname/selectpicker",
-        type: 'post',
-        beforeSend: function () {
-            showlargeloader();
-        },
-        success: function (response) {
-            hidelargeloader();
-            var jsonData = JSON.stringify(response);
-            var options = '';
-            var select = $('#product_id');
-            $.each(JSON.parse(jsonData), function (idx, obj) {
-                options += '<option value="' + obj.id + '" data-subtext="' + obj.distributor + ' (' + obj.stock_product + ')' + '">' + obj.product + '</option>';
-            });
-            select.empty();
-            select.html(options);
-            select.selectpicker('refresh');
-        }
-    });
-}
+$("#product_table").on("click", ".remove", function () {
+    $(this)
+        .closest("tr")
+        .remove();
+});

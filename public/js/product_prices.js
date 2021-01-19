@@ -186,35 +186,6 @@ function selectInput(obj) {
     });
 }
 
-function price(obj) {
-    if (!$(obj).val()) {
-        var n = ""
-    } else {
-        var n = parseInt(
-            $(obj)
-                .val()
-                .replace(/\D/g, ""),
-            10
-        )
-    }
-    $(obj).val(n.toLocaleString("id"))
-}
-
-function priceRow(obj) {
-    let id = obj.id
-    price(obj)
-    if (!$(obj).val()) {
-        $("#" + id + "_ori").val(0)
-    } else {
-        $("#" + id + "_ori").val(
-            $(obj)
-                .val()
-                .replace(/\.(\d\d)$/, ".$1")
-                .replace(".", "")
-        )
-    }
-}
-
 function hai() {
     $.ajax({
         url: "productPrices/selectpicker",

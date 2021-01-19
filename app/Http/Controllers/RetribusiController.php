@@ -118,10 +118,10 @@ class RetribusiController extends Controller
             ProductSales::insert($product, $numerator);
             //SELECT
             $select = TotalSales::where('numerator', $numerator);
-            $get = $select->first();
-            $total_sales_price = $get->total_sales_price;
-            $total_selling_price = $get->total_selling_price;
-            $discon_price = $get->discon_price;
+            // $get = $select->first();
+            // $total_sales_price = $get->total_sales_price;
+            // $total_selling_price = $get->total_selling_price;
+            // $discon_price = $get->discon_price;
             $select->update([
                 "grand_discon" => $grand_discon
             ]);

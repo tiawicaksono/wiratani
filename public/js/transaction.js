@@ -357,8 +357,7 @@ function loadDialogTable(text_category, this_textbox) {
                 width: 120,
                 title: "Price",
                 sortable: false
-            }
-            ]
+            }]
         ],
         onBeforeLoad: function (params) {
             params.search = text_category;

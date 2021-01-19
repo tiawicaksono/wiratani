@@ -29,13 +29,13 @@
                     <table class="table" id="product_table">
                         <thead>
                             <tr>
-                                <th class="text-center">PRODUCT CODE</th>
-                                <th class="text-center">PRODUCT NAME</th>
+                                <th class="text-center">BARCODE</th>
+                                <th class="text-center">PRODUCT</th>
                                 <th class="text-center">STOCK</th>
-                                <th class="text-center">UNIT PRICE</th>
+                                <th class="text-center">PRICE</th>
                                 <th class="text-center">QTY</th>
                                 <th class="text-center">DISCOUNT (@)</th>
-                                <th class="text-center">TOTAL PRICE</th>
+                                <th class="text-center">SUB-TOTAL</th>
                                 <th class="text-center"></th>
                             </tr>
                         </thead>

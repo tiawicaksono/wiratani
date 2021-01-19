@@ -4,7 +4,7 @@ namespace App\model\view;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VSupply extends Model
+class VSupplies extends Model
 {
-    protected $table = 'v_supply';
+    protected $table = 'v_supplies';
 }

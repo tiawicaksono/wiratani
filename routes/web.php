@@ -75,8 +75,8 @@ Route::group(['prefix' => 'supply', 'as' => 'supply.'], function () {
     Route::post('store', 'SupplyController@store')->name('store');
     Route::post('destroy', 'SupplyController@destroy')->name('delete');
     Route::post('show', 'SupplyController@show');
-    Route::post('detail', 'SupplyController@detailProduct')->name('detail');
-    Route::post('selectpicker', 'SupplyController@selectpicker');
+    Route::post('search', 'SupplyController@searchProduct');
+    Route::post('list', 'SupplyController@listProduct');
 });
 
 /**
