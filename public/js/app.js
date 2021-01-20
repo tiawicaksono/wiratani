@@ -730,8 +730,8 @@ __webpack_require__(/*! ../../node_modules/adminbsb-materialdesign/js/demo */ ".
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\KERJA\HELIOS\APPLICATIONS\WEB\apotek\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\KERJA\HELIOS\APPLICATIONS\WEB\apotek\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\KERJA\HELIOS\APPLICATIONS\WEB\wiratani\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\KERJA\HELIOS\APPLICATIONS\WEB\wiratani\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
