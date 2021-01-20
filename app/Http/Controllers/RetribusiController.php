@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
-use App\model\ProductSales;
-use App\model\TotalSales;
-use App\model\view\VDistributorProduct;
+use App\Model\ProductSales;
+use App\Model\TotalSales;
+use App\Model\view\VDistributorProduct;
 use Illuminate\Http\Request;
 
 class RetribusiController extends Controller

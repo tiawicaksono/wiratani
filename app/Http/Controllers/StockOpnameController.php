@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
-use App\model\StockOpname;
-use App\model\view\VDistributorProduct;
+use App\Model\StockOpname;
+use App\Model\view\VDistributorProduct;
 use App\Model\view\VStockOpname;
 use DateTime;
 use Illuminate\Http\Request;

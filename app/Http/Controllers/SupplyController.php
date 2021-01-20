@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Helpers\Helpers;
 use App\Model\Distributor;
 use App\Model\Supply;
-use App\model\view\VDistributorProduct;
+use App\Model\view\VDistributorProduct;
 use App\Model\view\VDistributorProductList;
-use App\model\view\VSupplies;
+use App\Model\view\VSupplies;
 use Exception;
 use Illuminate\Http\Request;
 

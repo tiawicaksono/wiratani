@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Helpers;
 use App\Model\Distributor;
-use App\model\DistributorProduct;
-use App\model\view\VDistributorProduct;
+use App\Model\DistributorProduct;
+use App\Model\view\VDistributorProduct;
 use App\Model\view\VDistributorProductList;
 use DateTime;
 use Illuminate\Http\Request;

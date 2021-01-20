@@ -6,7 +6,6 @@ use App\Exports\SalesTransactionExport;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\Controller;
 
-use App\Helpers\Helpers;
 use App\Model\view\VProductSales;
 use Exception;
 use Illuminate\Http\Request;

@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Model\DistributorProductList;
 use App\Model\Distributor;
 use App\Model\ProductCategory;
-use App\model\view\VDistributorProduct;
+use App\Model\view\VDistributorProduct;
 use App\Model\view\VDistributorProductList;
-use App\Model\view\VProduct;
 use Illuminate\Http\Request;
 
 class DistributorProductController extends Controller
