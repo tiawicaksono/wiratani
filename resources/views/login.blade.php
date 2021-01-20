@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>iofrm</title>
-    <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/fontawesome-all.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/iofrm-style.css">
-    <link rel="stylesheet" type="text/css" href="/css/iofrm-theme4.css">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/css/fontawesome-all.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/css/iofrm-style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/css/iofrm-theme4.css') }}">
 </head>
 
 <body>
@@ -16,7 +16,7 @@
         <div class="row">
             <div class="img-holder">
                 <div class="info-holder">
-                    <img src="{{ asset('images/graphic1.svg') }}" alt="">
+                    <img src="{{ URL::asset('public/images/graphic1.svg') }}" alt="">
                 </div>
             </div>
             <div class="form-holder">
