@@ -101,5 +101,5 @@
 @endsection
 
 @section('script')
-<script src="/js/stock_opname.js"></script>
+<script src="{{ URL::asset('public/js/stock_opname.js') }}"></script>
 @endsection

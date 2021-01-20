@@ -50,8 +50,8 @@
 @endsection
 
 @section('script')
-<script src="/js/jquery.quicksearch.js"></script>
-<script src="/js/bootstrap-tagsinput.js"></script>
-<script src="/js/distributor_product.js"></script>
-<script src="/js/product.js"></script>
+<script src="{{ URL::asset('public/js/jquery.quicksearch.js') }}"></script>
+<script src="{{ URL::asset('public/js/bootstrap-tagsinput.js') }}"></script>
+<script src="{{ URL::asset('public/js/distributor_product.js') }}"></script>
+<script src="{{ URL::asset('public/js/product.js') }}"></script>
 @endsection

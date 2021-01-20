@@ -9,8 +9,8 @@
     <title>@yield('title')</title>
     <!-- Favicon-->
     <link rel="icon" href="{{ asset('images/ico.ico') }}" type="image/x-icon">
-    <link rel="stylesheet" type="text/css" href="/css/app.css">
-    <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/css/app.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ URL::asset('public/css/main.css') }}">
     @yield('style')
 </head>
 
@@ -70,33 +70,32 @@
     <div style="display: none;" id="popup"></div>
     <!-- #END# Overlay For Sidebars -->
 </body>
-<script src="/js/master/jquery.js"></script>
-<script src="/js/master/bootstrap.js"></script>
-<script src="/js/master/bootstrap-select.min.js"></script>
-<script src="/js/master/sweetalert.min.js"></script>
-<script src="/js/master/jquery.spinner.min.js"></script>
-<script src="/js/master/jquery.slimscroll.js"></script>
-<script src="/js/master/waves.min.js"></script>
-<script src="/js/master/jquery.cookie.js"></script>
-<script src="/js/master/jquery.hotkeys.js"></script>
-<script src="/js/master/jquery-datatable/jquery.dataTables.js"></script>
-<script src="/js/master/jquery-datatable/dataTables.bootstrap.js"></script>
-<script src="/js/master/jquery-datatable/export/dataTables.buttons.min.js"></script>
-<script src="/js/master/jquery-datatable/export/buttons.flash.min.js"></script>
-<script src="/js/master/jquery-datatable/export/jszip.min.js"></script>
-<script src="/js/master/jquery-datatable/export/pdfmake.min.js"></script>
-<script src="/js/master/jquery-datatable/export/vfs_fonts.js"></script>
-<script src="/js/master/jquery-datatable/export/buttons.html5.min.js"></script>
-<script src="/js/master/jquery-datatable/export/buttons.print.min.js"></script>
-
-<script src="/js/master/jquery.inputmask.bundle.js"></script>
-<script src="/js/master/bootstrap-datepicker.min.js"></script>
-<script src="/js/master/jquery.numeric.js"></script>
-<script src="/js/master/jquery.multi-select.js"></script>
-<script src="/js/easyui/jquery.easyui.min.js"></script>
-<script src="/js/easyui/datagrid-scrollview.js"></script>
-<script src="/js/app.js"></script>
-<script src="/js/main.js"></script>
+<script src="{{ URL::asset('public/js/master/jquery.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/bootstrap.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/bootstrap-select.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/sweetalert.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.spinner.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.slimscroll.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/waves.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.cookie.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.hotkeys.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/jquery.dataTables.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/dataTables.bootstrap.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/dataTables.buttons.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/buttons.flash.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/jszip.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/pdfmake.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/vfs_fonts.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/buttons.html5.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery-datatable/export/buttons.print.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.inputmask.bundle.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/bootstrap-datepicker.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.numeric.js') }}"></script>
+<script src="{{ URL::asset('public/js/master/jquery.multi-select.js') }}"></script>
+<script src="{{ URL::asset('public/js/easyui/jquery.easyui.min.js') }}"></script>
+<script src="{{ URL::asset('public/js/easyui/datagrid-scrollview.js') }}"></script>
+<script src="{{ URL::asset('public/js/app.js') }}"></script>
+<script src="{{ URL::asset('public/js/main.js') }}"></script>
 @yield('script')
 
 </html>

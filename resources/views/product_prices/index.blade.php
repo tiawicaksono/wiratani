@@ -127,5 +127,5 @@
 @endsection
 
 @section('script')
-<script src="/js/product_prices.js"></script>
+<script src="{{ URL::asset('public/js/product_prices.js') }}"></script>
 @endsection

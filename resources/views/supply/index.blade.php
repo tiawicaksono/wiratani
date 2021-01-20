@@ -68,7 +68,7 @@
                                         <div class="input-group">
                                             <span class="input-group-addon">
                                                 <input type="checkbox" class="filled-in" id="ig_checkbox_1"
-                                                    name="ig_checkbox_1" >
+                                                    name="ig_checkbox_1">
                                                 <label for="ig_checkbox_1"></label>
                                             </span>
                                             <div class="form-line">
@@ -200,5 +200,5 @@
 @endsection
 
 @section('script')
-<script src="/js/supply.js"></script>
+<script src="{{ URL::asset('public/js/supply.js') }}"></script>
 @endsection

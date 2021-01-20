@@ -221,5 +221,5 @@
 @endsection
 
 @section('script')
-<script src="/js/transaction.js"></script>
+<script src="{{ URL::asset('public/js/transaction.js') }}"></script>
 @endsection

@@ -70,5 +70,5 @@
 @endsection
 
 @section('script')
-<script src="/js/report/transaction.js"></script>
+<script src="{{ URL::asset('public/js/report/transaction.js') }}"></script>
 @endsection
