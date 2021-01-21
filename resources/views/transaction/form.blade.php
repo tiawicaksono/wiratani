@@ -60,7 +60,7 @@
                                         <span class="input-group-addon">
                                             <button class="btn btn-default spin-down" data-spin="down" type="button"
                                                 onclick="calculateUnitPrice(this)">
-                                                <i class="material-icons">remove</i>
+                                                <i class="glyphicon glyphicon-minus"></i>
                                             </button>
                                         </span>
                                         <input onkeyup="calculateUnitPrice(this)" type="text"
@@ -69,7 +69,7 @@
                                         <span class="input-group-addon">
                                             <button class="btn btn-default spin-up" data-spin="up" type="button"
                                                 onclick="calculateUnitPrice(this)">
-                                                <i class="material-icons">add</i>
+                                                <i class="glyphicon glyphicon-plus"></i>
                                             </button>
                                         </span>
                                     </div>

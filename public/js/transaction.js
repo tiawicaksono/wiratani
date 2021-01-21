@@ -68,7 +68,7 @@ function addRow() {
     );
     $("#product_code_" + rowIdx).focus();
     var script = document.createElement("script");
-    script.src = "/wiratani/js/master/jquery.spinner.min.js";
+    script.src = "/wiratani/public/js/master/jquery.spinner.min.js";
     script.type = "text/javascript";
     document.getElementsByTagName("head")[0].appendChild(script);
 }
@@ -185,13 +185,13 @@ function calculateUnitPrice(obj) {
             .val(stock);
         $(obj)
             .closest("tr")
-            .find(".quantity")
+            .find(".spin-up")
             .prop("disabled", true);
         qty = stock
     } else {
         $(obj)
             .closest("tr")
-            .find(".quantity")
+            .find(".spin-up")
             .prop("disabled", false);
     }
     sum = (qty * unitPrice) - (qty * discon);
