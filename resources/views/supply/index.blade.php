@@ -49,7 +49,7 @@
                 <div class="row clearfix">
                     <div class="align-right m-r-10">
                         <button type="button" class="btn btn-primary waves-effect" onclick="addRow()">
-                            <i class="glyphicon glyphicon-plus"></i>
+                            <i class="material-icons">add</i>
                         </button>
                     </div>
                     <div class="clearfix">

@@ -68,7 +68,7 @@ function addRow() {
     );
     $("#product_code_" + rowIdx).focus();
     var script = document.createElement("script");
-    script.src = "/js/master/jquery.spinner.min.js";
+    script.src = "/wiratani/js/master/jquery.spinner.min.js";
     script.type = "text/javascript";
     document.getElementsByTagName("head")[0].appendChild(script);
 }
@@ -369,7 +369,7 @@ function loadDialogTable(text_category, this_textbox) {
     });
 
     function buttonSelectAcuan(value) {
-        var button = '<button type="button" class="btn btn-info" onclick="selectProduct(\'' + value + '\',\'' + this_textbox.id + '\')"><span class="glyphicon glyphicon-zoom-in "></span></button>';
+        var button = '<button type="button" class="btn btn-primary waves-effect" onclick="selectProduct(\'' + value + '\',\'' + this_textbox.id + '\')"><i class="material-icons">check_circle</i></button>';
         return button;
     }
 }

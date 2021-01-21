@@ -8,6 +8,7 @@ use App\Model\DistributorProduct;
 use App\Model\view\VDistributorProduct;
 use App\Model\view\VDistributorProductList;
 use DateTime;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProductPricesController extends Controller
@@ -49,8 +50,9 @@ class ProductPricesController extends Controller
                 );
                 DistributorProduct::create($arDataDistributorProduct);
                 $output['status'] = 'ok';
-            } catch (\Throwable $th) {
+            } catch (Exception $e) {
                 $output['status'] = 'error';
+                dd($e->getMessage());
             }
 
             return response()->json($output);

@@ -21,7 +21,7 @@
             <div class="row clearfix">
                 <div class="align-right">
                     <button type="button" class="btn btn-primary waves-effect" onclick="addRow()">
-                        <i class="glyphicon glyphicon-plus"></i>
+                        <i class="material-icons">add</i>
                         <span>ADD PRODUCT</span>
                     </button>
                 </div>
@@ -60,7 +60,7 @@
                                         <span class="input-group-addon">
                                             <button class="btn btn-default spin-down" data-spin="down" type="button"
                                                 onclick="calculateUnitPrice(this)">
-                                                <i class="glyphicon glyphicon-minus"></i>
+                                                <i class="material-icons">remove</i>
                                             </button>
                                         </span>
                                         <input onkeyup="calculateUnitPrice(this)" type="text"
@@ -69,7 +69,7 @@
                                         <span class="input-group-addon">
                                             <button class="btn btn-default spin-up" data-spin="up" type="button"
                                                 onclick="calculateUnitPrice(this)">
-                                                <i class="glyphicon glyphicon-plus"></i>
+                                                <i class="material-icons">add</i>
                                             </button>
                                         </span>
                                     </div>
