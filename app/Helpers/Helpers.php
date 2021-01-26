@@ -8,12 +8,22 @@ class Helpers
     {
         switch ($choice) {
             case "short":
-                $arMonth = array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agust", "Sep", "Okt", "Nov", "Des");
+                $arMonth = self::shortMonth();
                 break;
             case "long":
-                $arMonth = array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
+                $arMonth = self::longMonth();
         }
         return date("d", strtotime($tgl)) . " " . strtoupper($arMonth[date("n", strtotime($tgl)) - 1]) . " " . date("Y", strtotime($tgl));
+    }
+
+    public static function shortMonth()
+    {
+        return array("Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agust", "Sep", "Okt", "Nov", "Des");
+    }
+
+    public static function longMonth()
+    {
+        return array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember");
     }
 
     function urlJs($file)

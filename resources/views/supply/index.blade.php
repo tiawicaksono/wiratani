@@ -65,7 +65,7 @@
                             <tbody id="tbody">
                                 <tr id="1">
                                     <td class="row-index text-center">
-                                        <div class="input-group">
+                                        {{-- <div class="input-group">
                                             <span class="input-group-addon">
                                                 <input type="checkbox" class="filled-in" id="ig_checkbox_1"
                                                     name="ig_checkbox_1">
@@ -75,25 +75,21 @@
                                                 <input type="text" class="form-control form_product_code"
                                                     id="form_product_code_1">
                                             </div>
-                                        </div>
-
+                                        </div> --}}
+                                        <input type="checkbox" class="filled-in" id="ig_checkbox_1" name="ig_checkbox_1"
+                                            style="float: right; width:5%">
+                                        <label for="ig_checkbox_1"></label>
+                                        <input type="text" class="form-control form_product_code"
+                                            id="form_product_code_1" style="float: right; width:85%">
                                         <input type="hidden" class="form-control form_product_id"
                                             id="form_product_id_1">
                                     </td>
                                     <td class="row-index text-center">
-                                        <div class="input-group">
-                                            <div class="form-line">
-                                                <input type="text" class="form-control qty text-center" id="qty_1">
-                                            </div>
-                                        </div>
+                                        <input type="text" class="form-control qty text-center" id="qty_1">
                                     </td>
                                     <td class="row-index text-right">
-                                        <div class="input-group">
-                                            <div class="form-line">
-                                                <input type="text" class="form-control price text-center" id="price_1"
-                                                    size="5" onkeyup="priceRow(this)">
-                                            </div>
-                                        </div>
+                                        <input type="text" class="form-control price text-center" id="price_1" size="5"
+                                            onkeyup="priceRow(this)">
                                         <input type="hidden" class="form-control price_ori text-center" id="price_1_ori"
                                             value="0">
                                     </td>

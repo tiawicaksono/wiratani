@@ -259,7 +259,7 @@ class SupplyController extends Controller
 
                     $nestedData['action'] = "<div class='btn-group btn-group-sm edit-delete'>
                         <button type='button' class='btn btn-default waves-effect editBtn' style='float: none;'
-                            onclick='editButton(this)'>
+                            onclick='editButton(this)' disabled>
                             <i class='material-icons'>mode_edit</i>
                         </button>
                         <button type='button' class='btn btn-default waves-effect deleteBtn'

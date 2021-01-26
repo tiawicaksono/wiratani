@@ -22,7 +22,7 @@ $(document).on("keypress", ".form_product_code", function (e) {
     }
 });
 
-$(document).on("keypress", ".price, .discon", function (e) {
+$(document).on("keypress", ".price", function (e) {
     var code = e.keyCode || e.which;
     if (code == 13) {
         addRow();
@@ -413,12 +413,12 @@ function addRow() {
         rowIdx +
         '">' +
         '<td class="row-index text-center">' +
-        '<div class="input-group"><span class="input-group-addon"><input type="checkbox" class="filled-in" id="ig_checkbox' + rowIdx + '"><label for="ig_checkbox' + rowIdx + '"></label></span>' +
-        '<div class="form-line"><input type="text" class="form-control form_product_code" id="form_product_code_' + rowIdx + '"></div></div>' +
+        '<input type="checkbox" class="filled-in" id="ig_checkbox' + rowIdx + '" style="float: right; width:5%"><label for="ig_checkbox' + rowIdx + '"></label>' +
+        '<input type="text" class="form-control form_product_code" id="form_product_code_' + rowIdx + '" style="float: right; width:85%">' +
         '<input type="hidden" class="form-control form_product_id" id="form_product_id_' + rowIdx + '"></td>' +
-        '<td class="row-index text-center"><div class="input-group"><div class="form-line"><input type="text" class="form-control qty text-center" id="qty_' + rowIdx + '"></div></div></td>' +
+        '<td class="row-index text-center"><input type="text" class="form-control qty text-center" id="qty_' + rowIdx + '"></td>' +
         '<td class="row-index text-right">' +
-        '<div class="input-group"><div class="form-line"><input type="text" class="form-control price text-center" id="price_' + rowIdx + '" size="5" onkeyup="priceRow(this)"></div></div>' +
+        '<input type="text" class="form-control price text-center" id="price_' + rowIdx + '" size="5" onkeyup="priceRow(this)">' +
         '<input type="hidden" class="form-control price_ori text-center" id="price_' + rowIdx + '_ori" value="0">' +
         '</td>' +
         '<td class="text-center">' +
@@ -426,10 +426,6 @@ function addRow() {
         '<i class="material-icons">delete</i></button></td></tr>'
     );
     $("#form_product_code_" + rowIdx).focus();
-    var script = document.createElement("script");
-    script.src = "/js/master/jquery.spinner.min.js";
-    script.type = "text/javascript";
-    document.getElementsByTagName("head")[0].appendChild(script);
 }
 
 $("#product_table").on("click", ".remove", function () {

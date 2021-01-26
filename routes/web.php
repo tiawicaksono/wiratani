@@ -79,6 +79,15 @@ Route::group(['prefix' => 'supply', 'as' => 'supply.'], function () {
     Route::post('list', 'SupplyController@listProduct');
 });
 
+Route::group(['prefix' => 'profit', 'as' => 'profit.'], function () {
+    Route::get('/', 'ProfitController@index')->name('index');
+    Route::post('update', 'ProfitController@update')->name('update');
+    Route::post('store', 'ProfitController@store')->name('store');
+    Route::post('destroy', 'ProfitController@destroy')->name('delete');
+    Route::post('showWithDraw', 'ProfitController@showWithDraw');
+    Route::post('showProfit', 'ProfitController@showProfit');
+});
+
 /**
  * ======================================================================
  * REPORT
