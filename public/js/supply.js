@@ -32,38 +32,74 @@ $(document).on("keypress", ".price", function (e) {
 function fill_datatable() {
     var fromDate = $("#dari_tgl").val();
     var toDate = $("#sampai_tgl").val();
-    var groupColumnProduct = 6;
+    var groupColumnProduct = 7;
     $('#table-supply').dataTable({
         sDom: '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
         aoColumnDefs: [
-            { visible: false, aTargets: [6] },
-            { bSortable: false, aTargets: [2, 3, 4, 5, 6, 7, 8] },
+            { visible: false, aTargets: [6, 7] },
+            { bSortable: false, aTargets: [2, 3, 4, 5, 6, 7, 8, 9] },
             {
-                targets: [3, 7, 8],
+                targets: [3, 8, 9],
                 className: "text-center",
             },
         ],
         order: [[groupColumnProduct, 'asc']],
         destroy: true,
         bInfo: false,
+        // drawCallback: function (settings) {
+        //     var api = this.api();
+        //     var rows = api.rows({ page: 'current' }).nodes();
+        //     var last = null;
+        //     api.column(groupColumnProduct, { page: 'current' }).data().each(function (group, i) {
+        //         if (last !== group) {
+        //             $(rows).eq(i).before(
+        //                 '<tr class="group"><td colspan="8">' + group + '</td></tr>'
+        //             );
+        //             last = group;
+        //         }
+        //     });
+        //     $('#total').html(settings.json.total);
+        //     $('#sumber_helios').html(settings.json.total_helios);
+        //     $('#sumber_wiratani').html(settings.json.total_wiratani);
+        // },
         drawCallback: function (settings) {
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
+            var aData = new Array();
+
             api.column(groupColumnProduct, { page: 'current' }).data().each(function (group, i) {
-                if (last !== group) {
-                    $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="8">' + group + '</td></tr>'
-                    );
-                    last = group;
+                // console.log(group + ">>>" + i);
+                var vals = api.row(api.row($(rows).eq(i)).index()).data();
+                // console.log(vals['total_hidden']);
+                var salary = vals['total_hidden'] ? parseFloat(vals['total_hidden']) : 0;
+                // console.log(salary);
+                if (typeof aData[group] == 'undefined') {
+                    aData[group] = new Array();
+                    aData[group].rows = [];
+                    aData[group].salary = [];
                 }
+                aData[group].rows.push(i);
+                aData[group].salary.push(salary);
             });
-            $('#total').html(settings.json.total);
+            var idx = 0;
+            for (var delivery_date in aData) {
+                idx = Math.max.apply(Math, aData[delivery_date].rows);
+                var sum = 0;
+                $.each(aData[delivery_date].salary, function (k, v) {
+                    sum = sum + v;
+                });
+                // console.log(aData[delivery_date].salary);
+                $(rows).eq(idx).after(
+                    '<tr class="group"><td colspan="5">' + delivery_date + '</td>' +
+                    '<td>Rp ' + addPeriod(sum) + '</td><td></td><td></td></tr>'
+                );
+            };
+
             $('#sumber_helios').html(settings.json.total_helios);
             $('#sumber_wiratani').html(settings.json.total_wiratani);
         },
         lengthMenu: [[25, 50, -1], [25, 50, "All"]],
-        searching: false,
+        // searching: false,
         processing: true,
         serverSide: true,
         ajax: {
@@ -82,6 +118,7 @@ function fill_datatable() {
             { data: 'qty' },
             { data: 'price' },
             { data: 'total' },
+            { data: 'total_hidden' },
             { data: 'delivery_date' },
             { data: 'source' },
             { data: 'action' }

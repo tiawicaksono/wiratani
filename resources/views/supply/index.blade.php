@@ -152,18 +152,19 @@
                         <th style="width:30px !important">Qty</th>
                         <th style="width:80px !important">Price</th>
                         <th style="width:80px !important">Total</th>
+                        <th style="width:80px !important">Total</th>
                         <th style="width:100px !important">Delivery Date</th>
                         <th style="width:30px !important">Src</th>
                         <th style="width:125px !important"></th>
                     </tr>
                 </thead>
-                <tfoot>
+                {{-- <tfoot>
                     <tr>
                         <th colspan="5">TOTAL</th>
                         <th id="total"></th>
                         <th colspan="3"></th>
                     </tr>
-                </tfoot>
+                </tfoot> --}}
             </table>
             <div class="row">
                 HELIOS&nbsp;&nbsp;: <span id="sumber_helios"></span>

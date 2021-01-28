@@ -53,30 +53,49 @@ function fill_datatable_withdraw() {
     $('#table-supply').dataTable({
         sDom: '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
         aoColumnDefs: [
-            { visible: false, aTargets: [0] },
-            { bSortable: false, aTargets: [0, 1, 2, 3, 4, 5] },
+            { visible: false, aTargets: [0, 5] },
+            { bSortable: false, aTargets: [0, 1, 2, 3, 4, 5, 6] },
             {
-                targets: [2, 5],
+                targets: [2, 6],
                 className: "text-center",
             },
 
         ],
-        order: [[groupColumnProduct, 'asc']],
+        order: [[groupColumnProduct, 'desc']],
         destroy: true,
         bInfo: false,
         drawCallback: function (settings) {
             var api = this.api();
             var rows = api.rows({ page: 'current' }).nodes();
-            var last = null;
+            var aData = new Array();
+
             api.column(groupColumnProduct, { page: 'current' }).data().each(function (group, i) {
-                if (last !== group) {
-                    $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="6">' + group + '</td></tr>'
-                    );
-                    last = group;
+                // console.log(group + ">>>" + i);
+                var vals = api.row(api.row($(rows).eq(i)).index()).data();
+                // console.log(vals['total']);
+                var salary = vals['total_hidden'] ? parseFloat(vals['total_hidden']) : 0;
+                // console.log(salary);
+                if (typeof aData[group] == 'undefined') {
+                    aData[group] = new Array();
+                    aData[group].rows = [];
+                    aData[group].salary = [];
                 }
+                aData[group].rows.push(i);
+                aData[group].salary.push(salary);
             });
-            $('#total_pemakaian').html(settings.json.total);
+            var idx = 0;
+            for (var delivery_date in aData) {
+                idx = Math.max.apply(Math, aData[delivery_date].rows);
+                var sum = 0;
+                $.each(aData[delivery_date].salary, function (k, v) {
+                    sum = sum + v;
+                });
+                // console.log(aData[delivery_date].salary);
+                $(rows).eq(idx).after(
+                    '<tr class="group"><td colspan="3">' + delivery_date + '</td>' +
+                    '<td>Rp ' + addPeriod(sum) + '</td><td></td></tr>'
+                );
+            };
         },
         lengthMenu: [[15, 50, -1], [15, 50, "All"]],
         searching: false,
@@ -97,6 +116,7 @@ function fill_datatable_withdraw() {
             { data: 'qty' },
             { data: 'price' },
             { data: 'total' },
+            { data: 'total_hidden' },
             { data: 'action' }
         ]
     });

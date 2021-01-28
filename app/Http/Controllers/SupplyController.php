@@ -167,9 +167,10 @@ class SupplyController extends Controller
                 3 => 'qty',
                 4 => 'price',
                 5 => 'total',
-                6 => 'delivery_date',
-                7 => 'source',
-                8 => 'action'
+                6 => 'total_hidden',
+                7 => 'delivery_date',
+                8 => 'source',
+                9 => 'action'
             );
 
             $getSelect = VSupplies::select(
@@ -190,16 +191,77 @@ class SupplyController extends Controller
             $start = $request->input('start');
             $order = $columns[$request->input('order.0.column')];
             $dir = $request->input('order.0.dir');
-            $posts = $getSelect->whereBetween('delivery_date', [$from_date, $to_date])
-                ->offset($start)
-                ->limit($limit)
-                ->orderBy($order, $dir)
-                ->get();
 
-            $totalFiltered = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])->count();
-            $sum_total = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
-            $sum_helios = VSupplies::where('source', 'H')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
-            $sum_wiratani = VSupplies::where('source', 'W')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+            if (empty($request->input('search.value'))) {
+                $posts = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
+                    ->select(
+                        'id',
+                        'product_name',
+                        'distributor_name',
+                        'note',
+                        'price',
+                        'qty',
+                        'total',
+                        'delivery_date',
+                        'source'
+                    )
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+                $sum_total = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+                $sum_helios = VSupplies::where('source', 'H')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+                $sum_wiratani = VSupplies::where('source', 'W')->whereBetween('delivery_date', [$from_date, $to_date])->sum('total');
+            } else {
+                $search = $request->input('search.value');
+
+                $posts =  VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
+                    ->select(
+                        'id',
+                        'product_name',
+                        'distributor_name',
+                        'note',
+                        'price',
+                        'qty',
+                        'total',
+                        'delivery_date',
+                        'source'
+                    )
+                    ->where('product_name', 'ILIKE', "%{$search}%")
+                    ->orWhere('distributor_name', 'ILIKE', "{$search}")
+                    ->offset($start)
+                    ->limit($limit)
+                    ->orderBy($order, $dir)
+                    ->get();
+
+                $totalFiltered = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
+                    ->select(
+                        'id',
+                        'product_name',
+                        'distributor_name',
+                        'note',
+                        'price',
+                        'qty',
+                        'total',
+                        'delivery_date',
+                        'source'
+                    )
+                    ->where('product_name', 'ILIKE', "%{$search}%")
+                    ->orWhere('distributor_name', 'ILIKE', "{$search}")
+                    ->count();
+                $sum_total = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
+                    ->where('product_name', 'ILIKE', "%{$search}%")
+                    ->orWhere('distributor_name', 'ILIKE', "{$search}")
+                    ->sum('total');
+                $sum_helios = VSupplies::where('source', 'H')->whereBetween('delivery_date', [$from_date, $to_date])
+                    ->where('product_name', 'ILIKE', "%{$search}%")
+                    ->orWhere('distributor_name', 'ILIKE', "{$search}")
+                    ->sum('total');
+                $sum_wiratani = VSupplies::where('source', 'W')->whereBetween('delivery_date', [$from_date, $to_date])
+                    ->where('product_name', 'ILIKE', "%{$search}%")
+                    ->orWhere('distributor_name', 'ILIKE', "{$search}")
+                    ->sum('total');
+            }
 
             $data = array();
             if (!empty($posts)) {
@@ -250,6 +312,7 @@ class SupplyController extends Controller
                     value='$post->price'>";
 
                     $nestedData['total'] = "<span class='total'>" . Helpers::MoneyFormat($post->total) . "</span>";
+                    $nestedData['total_hidden'] = $post->total;
 
                     $nestedData['delivery_date'] = "<span class='editSpan delivery_date'>$delivery_date_span</span>
                     <input class='editInput delivery_date form-control input-sm varInput mask_date date_max_today'

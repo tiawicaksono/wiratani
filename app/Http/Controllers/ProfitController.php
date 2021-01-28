@@ -74,7 +74,8 @@ class ProfitController extends Controller
             2 => 'qty',
             3 => 'price',
             4 => 'total',
-            5 => 'action'
+            5 => 'total_hidden',
+            6 => 'action'
         );
 
         $getSelect = Withdraw::select(
@@ -136,6 +137,7 @@ class ProfitController extends Controller
                     value='$post->price'>";
 
                 $nestedData['total'] = "<span class='total'>" . Helpers::MoneyFormat($post->total) . "</span>";
+                $nestedData['total_hidden'] = $post->total;
 
                 $nestedData['action'] = "<div class='btn-group btn-group-sm edit-delete'>
                         <button type='button' class='btn btn-default waves-effect editBtn' style='float: none;'
