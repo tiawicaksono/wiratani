@@ -57,8 +57,10 @@
                             <span class="distributor_name">{{ $distributor }}</span>
                         </td>
                         <td style="width:50px !important">
-                            <center><input class="editInput total_product form-control input-sm varInput text-center"
-                                    type="text" name="total_product" value="" style="width:50px"></center>
+                            <center>
+                                <input class="editInput total_product form-control input-sm varInput text-center"
+                                    type="text" name="total_product" value="" style="width:50px">
+                            </center>
                         </td>
                         <td style="width:130px !important">
                             <input class="editInput purchase_price form-control input-sm" type="text" value=""

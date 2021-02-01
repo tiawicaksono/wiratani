@@ -43,7 +43,7 @@ function fill_datatable() {
                 className: "text-center",
             },
         ],
-        order: [[groupColumnProduct, 'asc']],
+        order: [[groupColumnProduct, 'desc']],
         destroy: true,
         bInfo: false,
         // drawCallback: function (settings) {

@@ -148,10 +148,10 @@
                     <tr role="row">
                         <th style="width:250px !important">Product Name</th>
                         <th style="width:130px !important">Distributor Name</th>
-                        <th style="width:200px !important">Note</th>
+                        <th style="width:180px !important">Note</th>
                         <th style="width:30px !important">Qty</th>
                         <th style="width:80px !important">Price</th>
-                        <th style="width:80px !important">Total</th>
+                        <th style="width:100px !important">Total</th>
                         <th style="width:80px !important">Total</th>
                         <th style="width:100px !important">Delivery Date</th>
                         <th style="width:30px !important">Src</th>

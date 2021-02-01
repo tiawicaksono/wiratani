@@ -2,7 +2,9 @@ $(function () {
     $("#product_code_1").focus()
     closeDialogTable()
     domo()
-
+    $("#bayar").on("click", function () {
+        $(this).select();
+    })
     // JIKA DIALOG EASYUI OPEN
     // var dlg = $("#dialogListGridProduct");
     // if (dlg.data('dialog')) {
@@ -80,50 +82,28 @@ $("#product_table").on("click", ".remove", function () {
     calculateTagihan();
 });
 
-function discon(obj) {
-    if (!$(obj).val()) {
-        var n = ""
-    } else {
-        var n = parseInt(
-            $(obj)
-                .val()
-                .replace(/\D/g, ""),
-            10
-        )
-    }
-    $(obj).val(n.toLocaleString("id"))
-}
-
 function disconRow(obj) {
-    let id = obj.id;
-    discon(obj)
-    if (!$(obj).val()) {
-        $("#" + id + "_ori").val(0)
-    } else {
-        $("#" + id + "_ori").val(
-            $(obj)
-                .val()
-                .replace(/\.(\d\d)$/, ".$1")
-                .replace(".", "")
-        )
-    }
+    let id = obj.id
+    priceRow(obj)
     calculateUnitPrice(obj)
 }
 
 function disconGrand(obj) {
-    discon(obj)
+    let id = obj.id
+    price(obj)
     if (!$(obj).val()) {
-        $("#discon_grand_ori").val(0)
+        $("#" + id + "_ori").val(0)
         calculateTagihan()
     } else {
-        $("#discon_grand_ori").val(
+        $("#" + id + "_ori").val(
             $(obj)
                 .val()
-                .replace(/\.(\d\d)$/, ".$1")
+                .replace(/[^,\d]/g, "")
                 .replace(".", "")
         )
+
         let total_tagihan = parseInt($("#total_tagihan").val())
-        let grandDiscon = parseInt($("#discon_grand_ori").val())
+        let grandDiscon = parseInt($("#" + id + "_ori").val())
         sum = total_tagihan - grandDiscon
         $("#grand_total").val("Rp " + addPeriod(sum))
         $("#grand_total_ori").val(sum)
@@ -207,18 +187,20 @@ function calculateUnitPrice(obj) {
 }
 
 function bayar(obj) {
-    discon(obj)
+    let id = obj.id
+    price(obj)
     if (!$(obj).val()) {
-        $("#bayar_ori").val(0)
+        $("#" + id + "_ori").val(0)
         $("#kembalian").val("Rp 0")
     } else {
-        $("#bayar_ori").val(
+        $("#" + id + "_ori").val(
             $(obj)
                 .val()
-                .replace(/\.(\d\d)$/, ".$1")
+                .replace(/[^,\d]/g, "")
                 .replace(".", "")
         )
-        let bayar = parseInt($("#bayar_ori").val())
+
+        let bayar = parseInt($("#" + id + "_ori").val())
         let grand_total = parseInt($("#grand_total_ori").val())
         kembalian = bayar - grand_total
         $("#kembalian").val("Rp " + addPeriod(kembalian))
@@ -286,6 +268,10 @@ function prosesSearch(text_category, this_textbox) {
                     .closest("tr")
                     .find(".quantity")
                     .focus();
+                $(this_textbox)
+                    .closest("tr")
+                    .find(".quantity")
+                    .select();
                 // addRow()
                 calculateTagihan();
             } else {
@@ -401,6 +387,7 @@ function selectProduct(params, field_id) {
             $('#discon_' + idx).prop("disabled", false)
             $('#qty_' + idx).prop("disabled", false);
             $('#qty_' + idx).focus();
+            $('#qty_' + idx).select();
             calculateTagihan()
             // addRow()
         },
@@ -464,8 +451,8 @@ function domo() {
     $(document).bind('keydown', 'esc', function assets() {
         swal.close()
         closeDialogTable()
-        return false;
-    });
+        return false
+    })
 
     $(document).bind('keydown', 'f1', function assets() {
         $("#discon_grand").focus()
@@ -474,26 +461,26 @@ function domo() {
 
     $(document).bind('keydown', 'f2', function assets() {
         $("#bayar").focus()
-        $grand_total = $("#grand_total_ori").val()
-        $("#bayar").val($grand_total)
-        $("#bayar_ori").val($grand_total)
-        return false;
-    });
+        // $grand_total = $("#grand_total_ori").val()
+        // $("#bayar").val($grand_total)
+        // $("#bayar_ori").val($grand_total)
+        // return false
+    })
 
     $(document).bind('keydown', 'f9', function assets() {
         cancel()
-        return false;
-    });
+        return false
+    })
 
     $(document).bind('keydown', 'f4', function assets() {
         save()
-        return false;
-    });
+        return false
+    })
 
     $(document).bind('keydown', 'Ctrl+c', function assets() {
         $grand_total = $("#grand_total_ori").val()
         $("#bayar").val($grand_total)
         $("#bayar_ori").val($grand_total)
-        return false;
-    });
+        return false
+    })
 }

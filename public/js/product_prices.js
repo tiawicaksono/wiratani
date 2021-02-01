@@ -34,8 +34,7 @@ $(document).ready(function () {
         ]
     });
     $('.total_product').numeric({ decimal: false, negative: false });
-    $('.purchase_price').numeric({ negative: false });
-    $('.selling_price').numeric({ negative: false });
+    // $('.selling_price').numeric({ decimal: false, negative: false });
 })
 
 // BUTTON
@@ -117,6 +116,7 @@ function saveButton(obj, ID, choice = 'update') {
                     trObj.find(".saveBtn").hide();
                     trObj.find(".cancelBtn").hide();
                 } else {
+                    $('#ig_checkbox_0').prop('checked', false);
                     trObj.find(".editInput.total_product").val('');
                     trObj.find(".editInput.purchase_price").val('');
                     trObj.find(".editInput.selling_price").val('');
