@@ -8,7 +8,7 @@
     </div>
     <div class="clearfix">
         <div class="align-right m-r-10">
-            <button type="button" class="btn btn-primary waves-effect" onclick="addRow()">
+            <button type="button" class="btn btn-warning waves-effect" onclick="addRow()">
                 <i class="material-icons">add</i>
             </button>
         </div>
@@ -43,7 +43,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-block btn-lg btn-success waves-effect" onclick="save()">
+            <button type="button" class="btn btn-block btn-lg btn-primary waves-effect" onclick="save()">
                 <i class="material-icons">save</i>
                 SAVE
             </button>

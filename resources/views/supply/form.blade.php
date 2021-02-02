@@ -19,7 +19,7 @@
     </div>
     <div class="row clearfix">
         <div class="align-right m-r-10">
-            <button type="button" class="btn btn-primary waves-effect" onclick="addRow()">
+            <button type="button" class="btn btn-warning waves-effect" onclick="addRow()">
                 <i class="material-icons">add</i>
             </button>
         </div>
@@ -36,17 +36,6 @@
                 <tbody id="tbody">
                     <tr id="1">
                         <td class="row-index text-center">
-                            {{-- <div class="input-group">
-                                <span class="input-group-addon">
-                                    <input type="checkbox" class="filled-in" id="ig_checkbox_1"
-                                        name="ig_checkbox_1">
-                                    <label for="ig_checkbox_1"></label>
-                                </span>
-                                <div class="form-line">
-                                    <input type="text" class="form-control form_product_code"
-                                        id="form_product_code_1">
-                                </div>
-                            </div> --}}
                             <input type="checkbox" class="filled-in" id="ig_checkbox_1" name="ig_checkbox_1"
                                 style="float: right; width:5%">
                             <label for="ig_checkbox_1"></label>
@@ -70,7 +59,7 @@
                     </tr>
                 </tbody>
             </table>
-            <button type="button" class="btn btn-block btn-lg btn-success waves-effect" onclick="save()">
+            <button type="button" class="btn btn-block btn-lg btn-primary waves-effect" onclick="save()">
                 <i class="material-icons">save</i>
                 SAVE
             </button>

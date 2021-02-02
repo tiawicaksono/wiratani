@@ -18,8 +18,9 @@
                     </select>
                 </div>
                 <div style="margin-bottom: 20px;">
-                    <button type="button" class="btn btn-block btn-lg btn-primary waves-effect"
-                        onclick="saveButton()">SAVE</button>
+                    <button type="button" class="btn btn-block btn-lg btn-primary waves-effect" onclick="saveButton()">
+                        <i class="material-icons">save</i> SAVE
+                    </button>
                 </div>
                 <select id="optgroup" class="ms" multiple="multiple">
                     @foreach ($dataProductCategory['category'] as $dataCategory)

@@ -49,19 +49,23 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-2 col-md-12 col-sm-12 col-xs-12">
-                    <select name="bulan" id="bulan">
-                        @foreach ($longMonth as $key=>$month)
-                        <option value="{{ $key+1 }}" {{ ($key+1==date('n'))?'selected':'' }}>{{ $month }}
-                        </option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
-                    <button type="button" id="btnFilter" class="btn btn-success waves-effect">
-                        <i class="material-icons">search</i>
-                        <span>FILTER</span>
-                    </button>
+                <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <select name="bulan" id="bulan">
+                                @foreach ($longMonth as $key=>$month)
+                                <option value="{{ $key+1 }}" {{ ($key+1==date('n'))?'selected':'' }}>{{ $month }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                            <button type="button" id="btnFilter" class="btn btn-success waves-effect">
+                                <i class="material-icons">search</i>
+                                <span>FILTER</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row">

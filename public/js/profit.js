@@ -97,7 +97,7 @@ function fill_datatable_withdraw() {
                 );
             };
         },
-        lengthMenu: [[15, 50, -1], [15, 50, "All"]],
+        lengthMenu: [[17, 50, -1], [17, 50, "All"]],
         searching: false,
         processing: true,
         serverSide: true,
