@@ -35,8 +35,8 @@
                 </thead>
                 <tbody>
                     <tr role="row" class="odd" id="0">
-                        <td style="width:235px !important">
-                            <div style="float: left; width:90%">
+                        <td style="width:255px !important">
+                            <div style="float: left; width:88%">
                                 <select id="product_id" name="product_id"
                                     class="form-control show-tick editInput product_id varInput" data-live-search="true"
                                     data-size="3" onchange="selectInput(this)">
@@ -79,7 +79,7 @@
                                 class="editInput delivery_date form-control input-sm varInput mask_date date_max_today"
                                 type="text" name="delivery_date" value="{{ date('d/m/Y') }}" style="width:105px">
                         </td>
-                        <td class="text-center" style="width:100px !important">
+                        <td class="text-center" style="width:75px !important">
                             <div class="btn-group btn-group-sm save-confirm-cancel">
                                 <button type="button" class="btn btn-success waves-effect saveBtn" style="float: none;"
                                     onclick="saveButton(this,0,'store')">

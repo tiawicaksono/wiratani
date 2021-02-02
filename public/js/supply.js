@@ -37,9 +37,9 @@ function fill_datatable() {
         sDom: '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
         aoColumnDefs: [
             { visible: false, aTargets: [6, 7] },
-            { bSortable: false, aTargets: [2, 3, 4, 5, 6, 7, 8, 9] },
+            { bSortable: false, aTargets: [2, 3, 4, 5, 6, 7, 8] },
             {
-                targets: [3, 8, 9],
+                targets: [3, 8],
                 className: "text-center",
             },
         ],
@@ -91,12 +91,13 @@ function fill_datatable() {
                 // console.log(aData[delivery_date].salary);
                 $(rows).eq(idx).after(
                     '<tr class="group"><td colspan="5">' + delivery_date + '</td>' +
-                    '<td>Rp ' + addPeriod(sum) + '</td><td></td><td></td></tr>'
+                    '<td>' + addPeriod(sum) + '</td><td></td><td></td></tr>'
                 );
             };
 
             $('#sumber_helios').html(settings.json.total_helios);
             $('#sumber_wiratani').html(settings.json.total_wiratani);
+            $('#total_sumber').html(settings.json.total);
         },
         lengthMenu: [[25, 50, -1], [25, 50, "All"]],
         // searching: false,
@@ -120,7 +121,6 @@ function fill_datatable() {
             { data: 'total' },
             { data: 'total_hidden' },
             { data: 'delivery_date' },
-            { data: 'source' },
             { data: 'action' }
         ]
     });

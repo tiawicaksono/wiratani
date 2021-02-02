@@ -169,8 +169,7 @@ class SupplyController extends Controller
                 5 => 'total',
                 6 => 'total_hidden',
                 7 => 'delivery_date',
-                8 => 'source',
-                9 => 'action'
+                8 => 'action'
             );
 
             $getSelect = VSupplies::select(
@@ -193,7 +192,7 @@ class SupplyController extends Controller
             $dir = $request->input('order.0.dir');
 
             if (empty($request->input('search.value'))) {
-                $posts = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
+                $getSelect = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
                     ->select(
                         'id',
                         'product_name',
@@ -203,9 +202,10 @@ class SupplyController extends Controller
                         'qty',
                         'total',
                         'delivery_date',
-                        'source'
-                    )
-                    ->offset($start)
+                        'source',
+                        'src'
+                    );
+                $posts = $getSelect->offset($start)
                     ->limit($limit)
                     ->orderBy($order, $dir)
                     ->get();
@@ -225,7 +225,8 @@ class SupplyController extends Controller
                         'qty',
                         'total',
                         'delivery_date',
-                        'source'
+                        'source',
+                        'src'
                     )
                     ->where('product_name', 'ILIKE', "%{$search}%")
                     ->orWhere('distributor_name', 'ILIKE', "{$search}")
@@ -233,6 +234,7 @@ class SupplyController extends Controller
                     ->limit($limit)
                     ->orderBy($order, $dir)
                     ->get();
+
 
                 $totalFiltered = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
                     ->select(
@@ -244,11 +246,13 @@ class SupplyController extends Controller
                         'qty',
                         'total',
                         'delivery_date',
-                        'source'
+                        'source',
+                        'src'
                     )
                     ->where('product_name', 'ILIKE', "%{$search}%")
                     ->orWhere('distributor_name', 'ILIKE', "{$search}")
                     ->count();
+                $totalData = $totalFiltered;
                 $sum_total = VSupplies::whereBetween('delivery_date', [$from_date, $to_date])
                     ->where('product_name', 'ILIKE', "%{$search}%")
                     ->orWhere('distributor_name', 'ILIKE', "{$search}")
@@ -301,7 +305,7 @@ class SupplyController extends Controller
 
                     $nestedData['qty'] = "<span class='editSpan qty'>$post->qty</span>
                     <input id='qty_$id' class='editInput qty form-control input-sm' type='text'
-                    value='$post->qty' style='display: none; width:50px'>";
+                    value='$post->qty' style='display: none;'>";
 
                     $nestedData['price'] = "<span
                     class='editSpan price'>$price_span</span>
@@ -311,14 +315,12 @@ class SupplyController extends Controller
                     class='form-control text-center varInput' name='price'
                     value='$post->price'>";
 
-                    $nestedData['total'] = "<span class='total'>" . Helpers::MoneyFormat($post->total) . "</span>";
+                    $nestedData['total'] = Helpers::MoneyFormat($post->total) . '<br/><small><code>' . strtolower($post->src) . '</code></small>';
                     $nestedData['total_hidden'] = $post->total;
 
                     $nestedData['delivery_date'] = "<span class='editSpan delivery_date'>$delivery_date_span</span>
                     <input class='editInput delivery_date form-control input-sm varInput mask_date date_max_today'
                     type='text' name='delivery_date' value='$delivery_date_form' style='display: none; width:85px'>";
-
-                    $nestedData['source'] = "<span class='total'>" . $post->source . "</span>";
 
                     $nestedData['action'] = "<div class='btn-group btn-group-sm edit-delete'>
                         <button type='button' class='btn btn-default waves-effect editBtn' style='float: none;'
@@ -353,9 +355,9 @@ class SupplyController extends Controller
                 "recordsTotal"    => intval($totalData),
                 "recordsFiltered" => intval($totalFiltered),
                 "data"            => $data,
-                "total"           => number_format($sum_total, 0, ',', '.'),
-                "total_helios"    => number_format($sum_helios, 0, ',', '.'),
-                "total_wiratani"  => number_format($sum_wiratani, 0, ',', '.'),
+                "total"           => Helpers::MoneyFormat($sum_total),
+                "total_helios"    => Helpers::MoneyFormat($sum_helios),
+                "total_wiratani"  => Helpers::MoneyFormat($sum_wiratani),
             );
 
             echo json_encode($json_data);
