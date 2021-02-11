@@ -182,7 +182,7 @@
 
                 <div class="row clearfix">
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                        <button type="button" class="btn btn-block btn-lg bg-amber waves-effect">
+                        <button type="button" class="btn btn-block btn-lg bg-amber waves-effect" onclick="cancel()">
                             <i class="material-icons">refresh</i>
                             CANCEL (F9)
                         </button>
