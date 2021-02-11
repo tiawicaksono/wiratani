@@ -41,7 +41,7 @@
                 </div>
                 {{-- PRODUCT LIST --}}
                 <div role="tabpanel" class="tab-pane fade" id="profile_with_icon_title">
-                    @include('distributor_product.product_ori')
+                    @include('distributor_product.product')
                 </div>
             </div>
         </div>
