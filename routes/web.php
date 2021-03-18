@@ -26,6 +26,7 @@ Route::group(['prefix' => 'cashier', 'as' => 'cashier.'], function () {
     Route::post('search', 'RetribusiController@searchProduct');
     Route::post('list', 'RetribusiController@listProduct');
     Route::post('store', 'RetribusiController@store');
+    Route::get('print', 'RetribusiController@test');
 });
 
 /**

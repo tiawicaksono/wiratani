@@ -326,7 +326,7 @@ function loadDialogTable(text_category, this_textbox) {
             },
             {
                 field: "product_name",
-                width: 200,
+                width: 300,
                 title: "Product Name",
                 sortable: true
             },

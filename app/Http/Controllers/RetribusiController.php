@@ -6,7 +6,12 @@ use App\Helpers\Helpers;
 use App\Model\ProductSales;
 use App\Model\TotalSales;
 use App\Model\view\VDistributorProduct;
+use Exception;
 use Illuminate\Http\Request;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\FilePrintConnector;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 class RetribusiController extends Controller
 {
@@ -30,15 +35,13 @@ class RetribusiController extends Controller
         return view('transaction.form');
     }
 
-
-
     public function searchProduct(Request $request)
     {
         if ($request->ajax()) {
             $products = VDistributorProduct::where('stock_product', '>', 0)
                 ->where(function ($query) {
-                    $query->where('product_name', 'ILIKE', '%' . request()->search . '%')
-                        ->orWhere('barcode', 'ILIKE', request()->search);
+                    $query->whereRaw("replace(LOWER(product_name), ' ', '') ilike '%" . str_replace(' ', '', request()->search) . "%'")
+                        ->orWhereRaw("replace(LOWER(barcode), ' ', '') ilike '%" . str_replace(' ', '', request()->search) . "%'");
                 });
             $count_product = $products->count();
             $id = '';
@@ -76,8 +79,8 @@ class RetribusiController extends Controller
 
             $products = VDistributorProduct::where('stock_product', '>', 0)
                 ->where(function ($query) {
-                    $query->where('product_name', 'ILIKE', '%' . request()->search . '%')
-                        ->orWhere('barcode', 'ILIKE', request()->search);
+                    $query->whereRaw("replace(LOWER(product_name), ' ', '') ilike '%" . str_replace(' ', '', request()->search) . "%'")
+                        ->orWhereRaw("replace(LOWER(barcode), ' ', '') ilike '%" . str_replace(' ', '', request()->search) . "%'");
                 });
             $count = $products->count();
             $productss = $products->orderBy($sort, $order)
@@ -171,5 +174,26 @@ class RetribusiController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function test()
+    {
+        try {
+            // Enter the share name for your printer here, as a smb:// url format
+            $connector = new WindowsPrintConnector("nota");
+            //$connector = new WindowsPrintConnector("smb://Guest@computername/Receipt Printer");
+            //$connector = new WindowsPrintConnector("smb://FooUser:secret@computername/workgroup/Receipt Printer");
+            //$connector = new WindowsPrintConnector("smb://User:secret@computername/Receipt Printer");
+
+            /* Print a "Hello world" receipt" */
+            $printer = new Printer($connector);
+            $printer->text("Hello World!\n");
+            $printer->cut();
+
+            /* Close printer */
+            $printer->close();
+        } catch (Exception $e) {
+            echo "Couldn't print to this printer: " . $e->getMessage() . "\n";
+        }
     }
 }

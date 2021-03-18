@@ -200,7 +200,7 @@
 </div>
 
 {{-- MODAL --}}
-<div id="dialogListGridProduct" class="easyui-dialog" title="Lis Data Product" style="width:620px; height:440px"
+<div id="dialogListGridProduct" class="easyui-dialog" title="Lis Data Product" style="width:720px; height:440px"
     data-options="
     iconCls: 'icon-save',
     autoOpen: false,
@@ -216,7 +216,7 @@
             closeDialogTable();
         }
     }]">
-    <table id="listGridProduct" style="width: 605px; height: 380px"></table>
+    <table id="listGridProduct" style="width: 705px; height: 380px"></table>
 </div>
 @endsection
 
