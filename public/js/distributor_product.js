@@ -24,7 +24,7 @@ $(document).ready(function () {
             api.column(groupColumns, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                        '<tr class="group"><td colspan="3">' + group + '</td></tr>'
                     );
                     last = group;
                 }

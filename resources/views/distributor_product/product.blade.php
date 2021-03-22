@@ -3,9 +3,9 @@
         role="grid">
         <thead>
             <tr role="row">
-                <th>Product Category</th>
+                <th style="width: 23%">Product Category</th>
                 <th>Product Name</th>
-                <th></th>
+                <th style="width: 7%"></th>
             </tr>
         </thead>
         <tbody>
@@ -42,20 +42,26 @@
     </table>
 
     <table id="table-products" class="table table-bordered table-striped table-hover table-responsive dataTable"
-        role="grid">
+        role="grid" style="width: 100%">
         <thead>
             <tr role="row">
                 <th>Product Category</th>
                 <th>Product Name</th>
+                <th>Active Ingredients</th>
+                <th>How to Use</th>
+                <th>Usability</th>
                 <th></th>
                 <th></th>
             </tr>
         </thead>
         <tfoot>
             <tr>
-                <th style="width: 366px !important">Product Category</th>
-                <th style="width: 570px !important">Product Name</th>
-                <th style="width: 143px !important"></th>
+                <th style="width: 10%">Product Category</th>
+                <th style="width: 25%">Product Name</th>
+                <th>Active Ingredients</th>
+                <th>How to Use</th>
+                <th>Usability</th>
+                <th style="width: 7%"></th>
                 <th></th>
             </tr>
         </tfoot>

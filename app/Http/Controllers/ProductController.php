@@ -54,23 +54,29 @@ class ProductController extends Controller
                 $product_id = $request->id;
                 $product_category_id = $request->category_name;
                 $product_name = $request->product_name;
+                $active_ingredients = $request->active_ingredients;
+                $how_to_use = $request->how_to_use;
+                $usability = $request->usability;
                 $status = 'ok';
                 $product = Product::where('product_name', 'ILIKE', $product_name)
                     ->where('product_category_id', $product_category_id);
-                //CEK APAKAH DATA REQUESTSUDAH DIPAKAI? KALAU BELUM MAKA BOLEH UPDATE
+                //CEK APAKAH DATA REQUEST SUDAH DIPAKAI? KALAU BELUM MAKA BOLEH UPDATE
                 if ($product->exists()) {
                     $dtProduct = $product->where('id', '<>', $product_id)->count();
                     if ($dtProduct != 0) {
                         $status = 'error';
                     } else {
-                        Product::edit($product_id, $product_name, $product_category_id);
+                        Product::edit($product_id, $product_name, $product_category_id, $active_ingredients, $how_to_use, $usability);
                     }
                 } else {
-                    Product::edit($product_id, $product_name, $product_category_id);
+                    Product::edit($product_id, $product_name, $product_category_id, $active_ingredients, $how_to_use, $usability);
                 }
                 $output['status'] = $status;
                 $output['product_category_id'] = $product_category_id;
                 $output['product_name'] = strtoupper($product_name);
+                $output['active_ingredients'] = strtoupper($active_ingredients);
+                $output['how_to_use'] = strtoupper($how_to_use);
+                $output['usability'] = strtoupper($usability);
                 $arProductCategory = ProductCategory::find($product_category_id);
                 $output['category_name'] = $arProductCategory->category_name;
             } catch (\Throwable $th) {
@@ -92,11 +98,14 @@ class ProductController extends Controller
         $columns = array(
             0 => 'product_category_id',
             1 => 'product_name',
-            2 => 'action',
-            3 => 'category_name'
+            2 => 'active_ingredients',
+            3 => 'how_to_use',
+            4 => 'usability',
+            5 => 'action',
+            6 => 'category_name'
         );
 
-        $queryListProduct = VProduct::select('id', 'product_category_id', 'category_name', 'product_name');
+        $queryListProduct = VProduct::select('id', 'product_category_id', 'category_name', 'product_name', 'active_ingredients', 'how_to_use', 'usability');
         $totalData = $queryListProduct->count();
         $totalFiltered = $totalData;
 
@@ -106,7 +115,7 @@ class ProductController extends Controller
         $dir = $request->input('order.0.dir');
 
         if (empty($request->input('search.value'))) {
-            $posts = VProduct::select('id', 'product_category_id', 'category_name', 'product_name')
+            $posts = VProduct::select('id', 'product_category_id', 'category_name', 'product_name', 'active_ingredients', 'how_to_use', 'usability')
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -114,7 +123,7 @@ class ProductController extends Controller
         } else {
             $search = $request->input('search.value');
 
-            $posts =  VProduct::select('id', 'product_category_id', 'category_name', 'product_name')
+            $posts =  VProduct::select('id', 'product_category_id', 'category_name', 'product_name', 'active_ingredients', 'how_to_use', 'usability')
                 ->where('product_name', 'ILIKE', "%{$search}%")
                 ->orWhere('category_name', 'ILIKE', "%{$search}%")
                 ->offset($start)
@@ -122,7 +131,7 @@ class ProductController extends Controller
                 ->orderBy($order, $dir)
                 ->get();
 
-            $totalFiltered = VProduct::select('id', 'product_category_id', 'category_name', 'product_name')
+            $totalFiltered = VProduct::select('id', 'product_category_id', 'category_name', 'product_name', 'active_ingredients', 'how_to_use', 'usability')
                 ->where('product_name', 'ILIKE', "%{$search}%")
                 ->orWhere('category_name', 'ILIKE', "%{$search}%")
                 ->count();
@@ -150,6 +159,19 @@ class ProductController extends Controller
                 $nestedData['product_name'] = "<span class='editSpan product_name'>$post->product_name</span>
                 <input class='editInput product_name form-control input-sm varInput' type='text' name='product_name' value='$post->product_name' 
                 style='display: none; width:100%; text-transform:uppercase'>";
+
+                $nestedData['active_ingredients'] = "<span class='editSpan active_ingredients'>$post->active_ingredients</span>
+                <input class='editInput active_ingredients form-control input-sm varInput' type='text' name='active_ingredients' value='$post->active_ingredients' 
+                style='display: none; width:100%; text-transform:uppercase'>";
+
+                $nestedData['how_to_use'] = "<span class='editSpan how_to_use'>$post->how_to_use</span>
+                <input class='editInput how_to_use form-control input-sm varInput' type='text' name='how_to_use' value='$post->how_to_use' 
+                style='display: none; width:100%; text-transform:uppercase'>";
+
+                $nestedData['usability'] = "<span class='editSpan usability'>$post->usability</span>
+                <input class='editInput usability form-control input-sm varInput' type='text' name='usability' value='$post->usability' 
+                style='display: none; width:100%; text-transform:uppercase'>";
+
                 $nestedData['action'] = "<div class='btn-group btn-group-sm edit-delete'>
                 <button type='button' class='btn btn-default waves-effect editBtn' style='float: none;'
                     onclick='editButton(this)'>
@@ -163,7 +185,7 @@ class ProductController extends Controller
             <div class='btn-group btn-group-sm save-confirm-cancel'>
                 <button type='button' class='btn btn-success waves-effect saveBtn'
                     style='float: none; display: none;'
-                    onclick='saveButtonProduct(this,$post->id)'>
+                    onclick='saveButtonUpdateProduct(this,$post->id)'>
                     <i class='material-icons'>save</i>
                 </button>
                 <button type='button' class='btn btn-success waves-effect confirmBtn'

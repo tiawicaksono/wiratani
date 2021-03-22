@@ -3,10 +3,10 @@ $(document).ready(function () {
     $('#table-products').dataTable({
         "sDom": '<"row view-filter"<"col-sm-12"<"pull-left"l><"pull-right"f><"clearfix">>>t<"row view-pager"<"col-sm-12"<"text-center"ip>>>',
         "aoColumnDefs": [
-            { targets: [2], "className": "text-center", "width": "148px" },
-            { "visible": false, "aTargets": [3] },
-            { "bSortable": false, "aTargets": [0, 1, 2, 3] },
-            { "bSearchable": false, "aTargets": [2, 3] }
+            { targets: [5], "className": "text-center", "width": "148px" },
+            { "visible": false, "aTargets": [6] },
+            { "bSortable": false, "aTargets": [0, 1, 2, 3, 4, 5, 6] },
+            { "bSearchable": false, "aTargets": [5, 6] }
         ],
         'order': [[groupColumnProduct, 'asc']],
         "displayLength": 10,
@@ -19,7 +19,7 @@ $(document).ready(function () {
             api.column(groupColumnProduct, { page: 'current' }).data().each(function (group, i) {
                 if (last !== group) {
                     $(rows).eq(i).before(
-                        '<tr class="group"><td colspan="4">' + group + '</td></tr>'
+                        '<tr class="group"><td colspan="6">' + group + '</td></tr>'
                     );
                     last = group;
                 }
@@ -35,6 +35,9 @@ $(document).ready(function () {
         "columns": [
             { "data": "product_category_id" },
             { "data": "product_name" },
+            { "data": "active_ingredients" },
+            { "data": "how_to_use" },
+            { "data": "usability" },
             { "data": "action" },
             { "data": "category_name" },
         ]
@@ -70,7 +73,7 @@ function saveButtonNewProduct(obj, urlAct) {
     });
 }
 
-function saveButtonProduct(obj, ID) {
+function saveButtonUpdateProduct(obj, ID) {
     var trObj = $(obj).closest("tr");
     var inputData = $(obj).closest("tr").find(".varInput").serialize();
     $.ajax({
@@ -84,6 +87,12 @@ function saveButtonProduct(obj, ID) {
                 trObj.find(".editSpan.category_name_text").text(response.category_name);
                 trObj.find(".editSpan.product_name").text(response.product_name);
                 trObj.find(".editSpan.product_name").val(response.product_name);
+                trObj.find(".editSpan.active_ingredients").text(response.active_ingredients);
+                trObj.find(".editSpan.active_ingredients").val(response.active_ingredients);
+                trObj.find(".editSpan.how_to_use").text(response.how_to_use);
+                trObj.find(".editSpan.how_to_use").val(response.how_to_use);
+                trObj.find(".editSpan.usability").text(response.usability);
+                trObj.find(".editSpan.usability").val(response.usability);
 
                 trObj.find(".editInput").hide();
                 trObj.find(".editSpan").show();
