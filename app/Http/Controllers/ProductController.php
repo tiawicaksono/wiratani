@@ -126,6 +126,7 @@ class ProductController extends Controller
             $posts =  VProduct::select('id', 'product_category_id', 'category_name', 'product_name', 'active_ingredients', 'how_to_use', 'usability')
                 ->where('product_name', 'ILIKE', "%{$search}%")
                 ->orWhere('category_name', 'ILIKE', "%{$search}%")
+                ->orWhere('active_ingredients', 'ILIKE', "%{$search}%")
                 ->offset($start)
                 ->limit($limit)
                 ->orderBy($order, $dir)
@@ -134,6 +135,7 @@ class ProductController extends Controller
             $totalFiltered = VProduct::select('id', 'product_category_id', 'category_name', 'product_name', 'active_ingredients', 'how_to_use', 'usability')
                 ->where('product_name', 'ILIKE', "%{$search}%")
                 ->orWhere('category_name', 'ILIKE', "%{$search}%")
+                ->orWhere('active_ingredients', 'ILIKE', "%{$search}%")
                 ->count();
         }
 

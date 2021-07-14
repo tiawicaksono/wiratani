@@ -31,6 +31,7 @@
                         <th>Price</th>
                         <th>Delivery Date</th>
                         <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,12 +75,16 @@
                             <input id="selling_price_0_ori" type="hidden" name="selling_price"
                                 class="form-control text-center varInput selling_price_hidden" value="0">
                         </td>
-                        <td style="width:77px !important">
+                        <td style="width:50px !important">
                             <input
                                 class="editInput delivery_date form-control input-sm varInput mask_date date_max_today"
-                                type="text" name="delivery_date" value="{{ date('d/m/Y') }}" style="width:105px">
+                                type="text" name="delivery_date" value="{{ date('d/m/Y') }}">
                         </td>
-                        <td class="text-center" style="width:75px !important">
+                        <td class="text-center" style="width:10px !important">
+                            <input type="checkbox" class="filled-in varInput" id="ig_checkbox" name="ig_checkbox">
+                            <label for="ig_checkbox">Order ?</label>
+                        </td>
+                        <td class="text-center" style="width:85px !important">
                             <div class="btn-group btn-group-sm save-confirm-cancel">
                                 <button type="button" class="btn btn-success waves-effect saveBtn" style="float: none;"
                                     onclick="saveButton(this,0,'store')">

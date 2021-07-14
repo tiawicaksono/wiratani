@@ -116,7 +116,7 @@ function saveButton(obj, ID, choice = 'update') {
                     trObj.find(".saveBtn").hide();
                     trObj.find(".cancelBtn").hide();
                 } else {
-                    $('#ig_checkbox_0').prop('checked', false);
+                    $('#ig_checkbox').attr('checked', false);
                     trObj.find(".editInput.total_product").val('');
                     trObj.find(".editInput.purchase_price").val('');
                     trObj.find(".editInput.selling_price").val('');

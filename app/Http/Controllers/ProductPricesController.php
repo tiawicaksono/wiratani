@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\Helpers;
 use App\Model\Distributor;
 use App\Model\DistributorProduct;
+use App\Model\Supply;
 use App\Model\view\VDistributorProduct;
 use App\Model\view\VDistributorProductList;
 use DateTime;
@@ -49,6 +50,15 @@ class ProductPricesController extends Controller
                     'distributor_products_list_id' => $distributor_product_list_id,
                 );
                 DistributorProduct::create($arDataDistributorProduct);
+                if (isset($request->ig_checkbox)) {
+                    $db = new Supply();
+                    $db->distributor_product_id = $distributor_product_list_id;
+                    $db->qty = $total_product;
+                    $db->price = $purchase_price;
+                    $db->total = $total_product * $purchase_price;
+                    $db->delivery_date = $delivery_date;
+                    $db->save();
+                }
                 $output['status'] = 'ok';
             } catch (Exception $e) {
                 $output['status'] = 'error';

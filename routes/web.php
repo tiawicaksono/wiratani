@@ -60,6 +60,20 @@ Route::group(['prefix' => 'product', 'as' => 'product.'], function () {
     Route::post('show', 'ProductController@show');
 });
 
+Route::group(['prefix' => 'data', 'as' => 'data.'], function () {
+    Route::get('/', 'DataController@index')->name('create');
+    Route::post('update', 'DataController@update')->name('update');
+    Route::post('store', 'DataController@store')->name('store');
+    Route::post('destroy', 'DataController@destroy')->name('delete');
+    Route::post('show', 'DataController@show');
+});
+
+/**
+ * ======================================================================
+ * OTHER
+ * ======================================================================
+ */
+
 Route::group(['prefix' => 'stockOpname', 'as' => 'stockOpname.'], function () {
     Route::get('/', 'StockOpnameController@index')->name('index');
     Route::post('update', 'StockOpnameController@update')->name('update');
